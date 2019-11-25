@@ -1,105 +1,48 @@
-﻿#include "Ball.h"
-#include "iostream"
-using namespace std;
+#include "Ball.h"
+
+
 
 Ball::Ball()
 {
-	_height_state = 'D';	//Down
-	_width_state = 'L';		//Left
-	_state = 'T';			//True
 }
+
+
 Ball::~Ball()
 {
+}
 
+Ball::Ball(int x, int y) {
+	_x = x;
+	_y = y;
+	_ox = _x;
+	_oy = _y;
+	_vx = _vy = 0;
 }
-char Ball::HeightState()
-{
-	return _height_state;
-}
-void Ball::SetHeightState(char newState)
-{
-	if (newState == 'U' || newState == 'D')	//Bóng chỉ có 2 trạng thái là đang đi lên hoặc đang đi xuống thôi
-	{
-		_height_state = newState;
-	}
-}
-char Ball::WidthState()
-{
-	return _width_state;
-}
-void Ball::SetWidthState(char newState)
-{
-	if (newState == 'L' || newState == 'R')	//Bóng chỉ có 2 trạng thái là đang đi sang trái hoặc đang đi sang phải thôi
-	{
-		_width_state = newState;
-	}
-}
-char Ball::State()
-{
-	return _state;
-}
-void Ball::SetState(char newState)
-{
-	_state = newState;
-}
-void Ball::DrawBall(char c)
-{
-	_pos.GoTo();
-	cout << c;
-}
-Point2D Ball::Pos()
-{
-	return _pos;
-}
-void Ball::SetPos(Point2D newPos)
-{
-	_pos = newPos;
-}
-void Ball::MoveBall(int height, int width)
-{
 
-	int x = _pos.X(), y = _pos.Y();
+// Input: h(con tro su dung voi man hinh console)
+// Output: Qua bong
+// Chuc nang: Ve qua bong
+void Ball::Draw(HANDLE& h) {
+	SetConsoleTextAttribute(h, 15);
+	COORD c;
+	//Vi tri cu
+	c.X = int(_ox);
+	c.Y = int(_oy);
 
-	DrawBall(' ');
+	SetConsoleCursorPosition(h, c);
+	//Xoa vi tri cu
+	cout << ' ';
+	//Vi tri moi
+	c.X = int(_x);
+	c.Y = int(_y);
 
-	//Thay đổi trạng thái khi va chạm
-	if ('T' == _state)
-	{
-		if (x >= width - 1)
-		{
-			SetWidthState('L');
-		}
-		else if (x <= 1)
-		{
-			SetWidthState('R');
-		}
-		if (y >= height - 3)
-		{
-			SetHeightState('U');
-		}
-		else if (y <= 3)
-		{
-			SetHeightState('D');
-		}
-	}
+	SetConsoleCursorPosition(h, c);
+	SetConsoleTextAttribute(h, 6);
+	//Ve vi tri moi
+	cout <<(char)(233);
 
-	//Thay đổi vị trí khi di chuyển
-	if ('D' == _height_state)
-	{
-		_pos.SetY(y + 1);
-	}
-	else
-	{
-		_pos.SetY(y - 1);
-	}
-	if ('L' == _width_state)
-	{
-		_pos.SetX(x - 1);
-	}
-	else
-	{
-		_pos.SetX(x + 1);
-	}
-
-	DrawBall('O');
+	SetConsoleTextAttribute(h, 15);
+	//Gan toa do vi tri moi vao _ox _oy de xu ly tiep khi bong di chuyen
+	_ox = _x;
+	_oy = _y;
 }
