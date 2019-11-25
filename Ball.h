@@ -1,31 +1,38 @@
-﻿#pragma once
-#include "Point2D.h"
+#pragma once
+#include <Windows.h>
+#include <iostream>
+
+using namespace std;
 
 class Ball
 {
 private:
-	Point2D _pos;
-	char _height_state;	//Báo hiệu bóng đang đi lên hay đi xuống.
-	char _width_state; //Báo hiệu bóng đang sang trái hay sang phải.
-	char _state;	//Báo hiệu bóng có còn trong vùng bar hứng được hay không.
+	int _x, _y; // Toa do (x, y) hien tai cua qua bong
+	int _ox, _oy; // Toa do (x, y) cu cua qua bong
+	float _vx, _vy; // Van toc cua qua bong
+public:
+	//getter & setter
+	void SetX(float x) { _x = (int)x; }
+	void SetY(float y) { _y = (int)y; }
+
+	void SetOX(float ox) { _ox = (int)ox; }
+	void SetOY(float oy) { _oy = (int)oy; }
+
+	void SetVX(float vx) { _vx = vx; }
+	void SetVY(float vy) { _vy = vy; }
+
+	int X() { return _x; }
+	int Y() { return _y; }
+
+	int OX() { return _ox; }
+	int OY() { return _oy; }
+
+	float VX() { return _vx; }
+	float VY() { return _vy; }
 public:
 	Ball();
 	~Ball();
-public:
-	Point2D Pos();
-
-	void SetPos(Point2D newPos);
-
-	char HeightState();
-	void SetHeightState(char newState);
-
-	char WidthState();
-	void SetWidthState(char newState);
-
-	char State();
-	void SetState(char newState);
-
-	void DrawBall(char c);
-	void MoveBall(int height, int width);
+	Ball(int, int); // Khoi tao
+	void Draw(HANDLE&); // Ve qua bong
 };
 
