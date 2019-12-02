@@ -44,7 +44,8 @@ Player::Player(int x, int y, int size) {
 // Input: h(con tro su dung voi man hinh console)
 // Output: Thanh choi
 // Chuc nang: Ve thanh choi
-void Player::Draw(HANDLE& h) {
+void Player::Draw(HANDLE& h) 
+{
 	SetConsoleTextAttribute(h, 9);
 	COORD c;
 	//Vi tri cu
@@ -61,7 +62,7 @@ void Player::Draw(HANDLE& h) {
 	c.Y = int(_y);
 
 	SetConsoleCursorPosition(h, c);
-	//SetConsoleTextAttribute(h, 10);
+
 	//Ve vi tri moi khi di chuyen
 	for (int i = -_size; i < _size; ++i) {
 		cout <<(char)(254);
