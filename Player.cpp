@@ -2,6 +2,28 @@
 
 
 
+bool Player::move()
+{
+	bool isMove = false;
+	if (GetAsyncKeyState(VK_LEFT)) {
+		SetX(_x - 2);
+		isMove = true;
+	}
+	else if (GetAsyncKeyState(VK_RIGHT)) {
+		SetX(_x + 2);
+		isMove = true;
+	}
+
+	//Tao ranh gioi cho nguoi choi
+	if (_x < Size() + 1) {
+		SetX(Size() + 1);
+	}
+	else if (_x> (WIDTH_BODER - Size() - 2)) {
+		SetX(WIDTH_BODER - Size() - 2);
+	}
+	return isMove ;
+}
+
 Player::Player()
 {
 }
@@ -12,17 +34,18 @@ Player::~Player()
 }
 
 Player::Player(int x, int y, int size) {
-	_x = float(x);
-	_y = float(y);
+	_x =x;
+	_y = y;
 	_size = size;
-	_ox = float(x);
-	_oy = float(y);
+	_ox = x;
+	_oy = y;
 }
 
 // Input: h(con tro su dung voi man hinh console)
 // Output: Thanh choi
 // Chuc nang: Ve thanh choi
 void Player::Draw(HANDLE& h) {
+	SetConsoleTextAttribute(h, 9);
 	COORD c;
 	//Vi tri cu
 	c.X = int(_ox) - _size;
