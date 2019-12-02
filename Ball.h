@@ -9,17 +9,17 @@ class Ball
 private:
 	int _x, _y; // Toa do (x, y) hien tai cua qua bong
 	int _ox, _oy; // Toa do (x, y) cu cua qua bong
-	float _vx, _vy; // Van toc cua qua bong
+	int _vx, _vy; // Van toc cua qua bong
 public:
 	//getter & setter
-	void SetX(float x) { _x = (int)x; }
-	void SetY(float y) { _y = (int)y; }
+	void SetX(int x) { _x = x; }
+	void SetY(int y) { _y = y; }
 
-	void SetOX(float ox) { _ox = (int)ox; }
-	void SetOY(float oy) { _oy = (int)oy; }
+	void SetOX(int ox) { _ox = ox; }
+	void SetOY(int oy) { _oy = oy; }
 
-	void SetVX(float vx) { _vx = vx; }
-	void SetVY(float vy) { _vy = vy; }
+	void SetVX(int vx) { _vx = vx; }
+	void SetVY(int vy) { _vy = vy; }
 
 	int X() { return _x; }
 	int Y() { return _y; }
@@ -27,8 +27,8 @@ public:
 	int OX() { return _ox; }
 	int OY() { return _oy; }
 
-	float VX() { return _vx; }
-	float VY() { return _vy; }
+	int VX() { return _vx; }
+	int VY() { return _vy; }
 public:
 	Ball();
 	~Ball();
