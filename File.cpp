@@ -12,30 +12,27 @@ void SaveToFile(int scoreplayer, int scorecomputer)
 	savefile.close();
 }
 
-vector<int> LoadFile()
+void LoadFile(char mode, int &scoreplayer, int & scorecomputer)
 {
-	vector<int>temp;
 	fstream loadfile;
 
-	temp.push_back(0);
-	temp.push_back(0);
-
-	loadfile.open("Save.txt", ios::in);
-
-	if (loadfile.fail())
+	if (mode == '1')
 	{
-		cout << "ban chua luu game" << endl;
-		return temp;
+		scoreplayer = 0;
+		scorecomputer = 0;
+	}
+	else
+	{
+		loadfile.open("Save.txt", ios::in);
+
+		if (loadfile.fail())
+		{
+			cout << "ban chua luu game" << endl;
+		}
+		loadfile >> scoreplayer;
+		loadfile >> scorecomputer;
+
+		loadfile.close();
 	}
 
-	string token;
-	int i = 0;
-	while (loadfile.good())
-	{
-		getline(loadfile, token);
-		temp.push_back((int)atoi(token.c_str()));
-	}
-	loadfile.close();
-
-	return temp;
 }
