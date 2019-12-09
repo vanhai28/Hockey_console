@@ -1,4 +1,3 @@
-﻿
 #pragma once
 #include "Box.h"
 #include <iostream>
@@ -9,9 +8,8 @@
 #include <vector>
 #include <iomanip>
 #include <conio.h>
-const int TOP_BODER = 6;
+static const int TOP_BODER = 6;
 const int LEFT_BODER = 1;
-
 
 //An con tro chuot tren man hinh
 //Khoa kich thuoc man hinh
@@ -27,22 +25,17 @@ void ResetResult(Player& you, Player& com, Ball& b, bool& started, int& yourScor
 void ResetGame(Player& you, Ball& b, bool& started, int& yourScore, HANDLE& h);
 
 // Ve khung man hinh
-void DrawBorder(HANDLE& h);
+void DrawBorder(HANDLE &h);
 
-//Dung game
-void PauseGame(HANDLE t);
-
-//dua con tro ghi toi vi tri (x,y)
-void gotoXY(int x, int y, HANDLE& h);
 
 //Khoi tao cac thong so cho danh sach cac hop
-void setListBox(vector<Box>& list, const int& level);
+void setListBox(vector<Box>& list, const int & level);
 
 //Hien thi cac hop ra man hinh
 void displayListBox(vector<Box>& list);
 
 //Kiem tra su va cham cua bong va cac hop
-bool checkBallCollideBox(Ball& ball, vector<Box>& list, int& score);
+bool checkBallCollideBox(Ball& ball, vector<Box>& list,int &score );
 
 //Luu thanh tich vao file
 void saveAchievement(int level, int score);
@@ -51,20 +44,18 @@ void saveAchievement(int level, int score);
 void showAchievemert(HANDLE h);
 
 //Tai du lieu game tu file
-void loadGame(char mode, int& level);
+void loadGame(char mode,int &level);
 
-//Chuyen mot chuoi sang mot so
-int tryParseInt(string line);
+
 
 
 //Man choi bong va hop
 void stagePingpongBox(Player you, Ball ball, HANDLE h);
 
-//màn chơi hockey
 void playPingpong(Player you, Player computer);
 
-// menu của game
 void menu(char& key, HANDLE h);
 
-//vẽ menu cho game
-void DrawMenu(char& key, HANDLE h);
+void DrawMenu(char& key, HANDLE& h);
+
+
