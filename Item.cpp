@@ -1,8 +1,31 @@
 #include "Item.h"
+#include <string>
 
+void Item::resetCatoryRandom()
+{
+	int temp = randomRange(0, 100);
+
+	if (temp > 0 && temp <= 30) {
+		cat = 2;
+	}
+	else if (temp > 30 && temp <= 60)
+	{
+		cat = 3;
+	}
+	else if (temp > 60 && temp < 80)
+	{
+		cat = 0;
+	}
+	else {
+		cat = 1;
+	}
+}
 
 Item::Item()
 {
+
+	cat = rand() % 4;
+	is_move = false;
 }
 
 
@@ -21,16 +44,13 @@ Item::Item(int x, int y) {
 // Input: h(con tro su dung voi man hinh console)
 // Output: Qua bong
 // Chuc nang: Ve qua bong
-void Item::Draw(HANDLE& h) {
+void Item::Draw(HANDLE& h) 
+{
+	if (!is_move || _y < 6) return;
 	SetConsoleTextAttribute(h, 15);
+	deleteItem(h);
 	COORD c;
-	//Vi tri cu
-	c.X = int(_ox);
-	c.Y = int(_oy);
-
-	SetConsoleCursorPosition(h, c);
-	//Xoa vi tri cu
-	cout << ' ';
+	
 	//Vi tri moi
 	c.X = int(_x);
 	c.Y = int(_y);
@@ -38,10 +58,31 @@ void Item::Draw(HANDLE& h) {
 	SetConsoleCursorPosition(h, c);
 	SetConsoleTextAttribute(h, 6);
 	//Ve vi tri moi
-	cout << (char)(234);
+	cout << catory[cat];
 
 	SetConsoleTextAttribute(h, 15);
 	//Gan toa do vi tri moi vao _ox _oy de xu ly tiep khi bong di chuyen
 	_ox = _x;
 	_oy = _y;
+}
+
+void Item::move()
+{
+	if (is_move)
+	{
+		_y++;
+	}
+}
+
+void Item::deleteItem(HANDLE& h)
+{
+	COORD c;
+	//Vi tri cu
+	c.X = int(_ox);
+	c.Y = int(_oy);
+
+	SetConsoleCursorPosition(h, c);
+	//Xoa vi tri cu
+	cout <<"     ";
+
 }
