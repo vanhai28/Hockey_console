@@ -71,24 +71,35 @@ void DrawBorder(HANDLE& h)
 	//Ve khung
 	SetConsoleTextAttribute(h, 12); //Tao mau cho khung choi
 	//Tao chu PONG
-	for (int i = 0; i < 24; i++)
+
+	for (int i = 0; i < 13; i++)
 	{
+		cout << ' ';
+	}
+	for (int i = 20; i < 64; i++)
+	{
+
 		cout << (char)(220);
 
 		switch (i) {
-		case 5: case 11: case 17:
+		case 25: case 26: case 32: case 38: case 45: case 51: case 57:
 			cout << ' ';
 			break;
-		default:
-			break;
+
 		}
+
 	}
 
 	cout << endl;
-
-	for (int i = 0; i < 24; i++) {
+	for (int i = 0; i < 13; i++)
+	{
+		cout << ' ';
+	}
+	for (int i = 20; i < 64; i++)
+	{
 		switch (i) {
-		case 0: case 4: case 5: case 9: case 10: case 14: case 15:
+		case 20: case 24: case 25: case 26: case 30: case 31: case 38:
+		case 42: case 43: case 47: case 48: case 52: case 53:
 			cout << (char)(219);
 			break;
 		default:
@@ -99,20 +110,27 @@ void DrawBorder(HANDLE& h)
 	}
 
 	cout << endl;
-
-	for (int i = 0; i < 24; i++)
+	for (int i = 0; i < 13; i++)
+	{
+		cout << ' ';
+	}
+	for (int i = 20; i < 64; i++)
 	{
 		switch (i) {
-		case 0: case 5:
+		case 20: case 25:
+		case 39: case 44:
 			cout << (char)(219);
 			continue;
-		case 1: case 2: case 3: case 4: case 19: case 20:
+		case 21: case 22: case 23: case 24: case 35: case 36:
+		case 40: case 41: case 42: case 43: case 58: case 59:
 			cout << (char)(220);
 			continue;
-		case 7: case 11: case 12: case 16: case 17:
+		case 27: case 28: case 32: case 33:
+		case 46: case 50: case 51: case 55: case 56:
 			cout << (char)(219);
 			break;
-		case 21:
+		case 37:
+		case 60:
 			cout << (char)(220);
 			break;
 		default:
@@ -123,11 +141,15 @@ void DrawBorder(HANDLE& h)
 	}
 
 	cout << endl;
-
-	for (int i = 0; i < 24; i++)
+	for (int i = 0; i < 13; i++)
+	{
+		cout << ' ';
+	}
+	for (int i = 20; i < 64; i++)
 	{
 		switch (i) {
-		case 0: case 6: case 10: case 11: case 15: case 16: case 20:
+		case 20: case 26: case 27: case 31: case 32: case 36:
+		case 38: case 44: case 49: case 48: case 53: case 54: case 58:
 			cout << (char)(219);
 			break;
 		default:
@@ -138,20 +160,27 @@ void DrawBorder(HANDLE& h)
 	}
 
 	cout << endl;
+	for (int i = 0; i < 13; i++)
+	{
+		cout << ' ';
+	}
 
-	for (int i = 0; i < 24; i++)
+	for (int i = 20; i < 64; i++)
 	{
 		switch (i) {
-		case 0: case 11: case 12: case 16: case 22:
+		case 20: case 26: case 27: case 31: case 37:
+		case 39: case 50: case 51: case 55: case 61:
 			cout << (char)(219);
 			break;
-		case 6:
+		case 32:
+		case 45:
 			cout << (char)(219);
 			continue;
-		case 17:
+		case 56:
 			cout << (char)(219);
 			continue;
-		case 7: case 8: case 9: case 10: case 18: case 19: case 20: case 21:
+		case 33: case 34: case 35: case 36:
+		case 46: case 47: case 48: case 49: case 57: case 58: case 59: case 60:
 			cout << (char)(220);
 			continue;
 		default:
@@ -451,6 +480,10 @@ void stagePingpongBox(Player you, Ball ball, HANDLE h)
 	SetConsoleTextAttribute(h, 15);
 	std::cout << "       Your score:" << yourScore << "\t\t      Level    : " << level << endl;
 
+	gotoXY(55, 15, h);
+	SetConsoleTextAttribute(h, 13);
+	std::cout << "     Phim ese de thoat" << endl;
+
 	//-------------------------------------------------------------
 
 	while (true) {
@@ -595,6 +628,7 @@ void stagePingpongBox(Player you, Ball ball, HANDLE h)
 
 void playPingpong(Player you, Player computer)
 {
+	//khoi tao cac bien
 	int maxSpeed = 2;
 	const int delay = 110;
 	const double second = 5.000;
@@ -616,8 +650,6 @@ void playPingpong(Player you, Player computer)
 	srand((int)time(0));
 	//Khoi tao
 	Ball ball(WIDTH_BODER / 2 - 1, (HEIGHT_BODER + 8) / 2);
-	//Item item2(int(rand() % WIDTH_BODER -1 ), 9);
-
 	Item listItem[numItem];
 
 	//Tao van toc ban dau cho qua bong. Bong se luon huong ve phia ban truoc.
@@ -637,24 +669,44 @@ void playPingpong(Player you, Player computer)
 
 	LoadFile(key, yourScore, computerScore);
 
-
+	//ve chu thich len man hinh
 	gotoXY(WIDTH_BODER / 2 - 10, HEIGHT_BODER / 2 + 5, h);
 	std::cout << "                          ";
 	gotoXY(WIDTH_BODER / 2 - 10, HEIGHT_BODER / 2 + 7, h);
 	std::cout << "                           ";
 
-	gotoXY(55, 7, h);
+	gotoXY(55, 9, h);
 	SetConsoleTextAttribute(h, 13);
 	std::cout << "       SCORE" << endl;
 
+	gotoXY(55, 19, h);
+	SetConsoleTextAttribute(h, 13);
+	std::cout << "Phim enter de luu game" << endl;
+
+	gotoXY(55, 22, h);
+	SetConsoleTextAttribute(h, 13);
+	std::cout << "Phim ese de thoat" << endl;
+
 	computer.SetVX(0);
+
+	//bo dem thoi gian
 	start = clock();
+
+	//bat dau vong chay
 	while (true) {
+
 		if (GetAsyncKeyState(VK_ESCAPE)) {
 			break;//ket thuc tro choi
 		}
+		//luu vao file
+		if (GetAsyncKeyState(VK_RETURN))
+		{
+			SaveToFile(yourScore, computerScore);
 
-		//v? di?m lên man hình
+		}
+
+
+		//ve diem lên man hình
 		gotoXY(55, 13, h);
 		SetConsoleTextAttribute(h, 15);
 		std::cout << "    Your score:" << yourScore << endl;
@@ -702,7 +754,7 @@ void playPingpong(Player you, Player computer)
 				ball.SetVX(maxSpeed);
 			}
 
-			you.getItem(listItem, numItem,h);
+			you.getItem(listItem, numItem, h);
 
 
 			//vi tri moi cua qua bong
@@ -735,7 +787,7 @@ void playPingpong(Player you, Player computer)
 				++computerScore;
 				ResetResult(you, computer, ball, started, yourScore, computerScore, h);
 				gotoXY(55, 13, h);
-				std::cout << "    score:   0    "  << endl;
+				std::cout << "    score:   0    " << endl;
 			}
 			else if (ball.Y() <= 5) {
 				++yourScore;
@@ -822,7 +874,7 @@ void playPingpong(Player you, Player computer)
 		end = clock();
 		duration = (double)(end - start) / CLOCKS_PER_SEC;
 
-		if (duration > timeDisplayItem && started)
+		if (duration > timeDisplayItem&& started)
 		{
 			for (int i = 0; i < numItem; i++)
 			{
@@ -830,7 +882,7 @@ void playPingpong(Player you, Player computer)
 				{
 					listItem[i].setIsMove(true);
 					listItem[i].resetCatoryRandom();
-					listItem[i].SetX(randomRange(5, WIDTH_BODER - 15));
+					listItem[i].SetX(randomRange(5, WIDTH_BODER - 14));
 					listItem[i].SetY(i * 10 - 20);
 				}
 			}
@@ -855,7 +907,6 @@ void playPingpong(Player you, Player computer)
 
 void menu(char& key, HANDLE h)
 {
-	system("cls");
 	SetConsoleTextAttribute(h, 10);
 
 	//vẽ chữ MENU
@@ -896,7 +947,6 @@ void DrawMenu(char& key, HANDLE& h)
 	//Ve khung
 	SetConsoleTextAttribute(h, 12); //Tao mau cho khung choi
 	//Tao chu PONG
-
 
 	for (int i = 0; i < 13; i++)
 	{
@@ -1062,5 +1112,3 @@ void DrawMenu(char& key, HANDLE& h)
 //	} while (key != '1' && key != '2' && key != '3' && key != '0');
 //
 //}
-
-
