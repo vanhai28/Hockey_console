@@ -26,6 +26,7 @@ bool Player::move()
 
 Player::Player()
 {
+	score = 0;
 }
 
 
@@ -39,6 +40,7 @@ Player::Player(int x, int y, int size) {
 	_size = size;
 	_ox = x;
 	_oy = y;
+	score = 0;
 }
 
 // Input: h(con tro su dung voi man hinh console)
@@ -72,4 +74,37 @@ void Player::Draw(HANDLE& h)
 	//Gan toa do vi tri moi vao _ox _oy de xu ly tiep khi di chuyen
 	_ox = _x;
 	_oy = _y;
+}
+
+void Player::getItem(Item item[], int numItem, HANDLE&h)
+{
+	for (int i = 0; i < numItem; i++)
+	{
+		if (item[i].Y() >= _y - 1 && item[i].Y() <= _y && item[i].X()>= _x - _size && item[i].X() < _x + _size) {
+			
+			item[i].deleteItem(h);
+			/*HANDLE h;
+			h = GetStdHandle(STD_OUTPUT_HANDLE);
+			Draw(h);*/
+			item[i].setIsMove(false);
+			
+			switch (item[i].getCatory())
+			{
+			case 0:
+				score *= 2;
+				break;
+			case 1:
+				score /= 2;
+				break;
+			case 2:
+				score += 10;
+				break;
+			case 3:
+				score -= 10;
+				break;
+			}
+
+			score = score > 0 ? score : 0;
+		}
+	}
 }
