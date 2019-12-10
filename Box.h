@@ -1,5 +1,6 @@
 #pragma once
-
+#include <vector>
+#include "ConstVariable.h"
 /*
 color:
 	26 : xam - lam
@@ -57,5 +58,12 @@ public:
 
 	Box();
 	~Box();
+
+public:
+	//Khoi tao cac thong so cho danh sach cac hop
+	static void setListBox(std::vector<Box>& list, const int & level);
+
+	//Hien thi cac hop ra man hinh
+	static void displayListBox(std::vector<Box>& list);
 };
 
