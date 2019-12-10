@@ -6,6 +6,9 @@
 #include"time.h"
 #include"File.h"
 #include <random>
+
+
+
 void Nocursortype()
 {
 	HWND consoleWindow = GetConsoleWindow();
@@ -19,7 +22,7 @@ void Nocursortype()
 	SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &Info);
 }
 
-void ResetResult(Player& you, Player& com, Ball& b, bool& started, int& yourScore, int& computerScore, HANDLE& h) {
+void ResetResult(Player& you, Player& com, Ball& ball, bool& started, int& yourScore, int& computerScore, HANDLE& h) {
 
 	you.setScore(0);
 	COORD pos;
@@ -42,10 +45,11 @@ void ResetResult(Player& you, Player& com, Ball& b, bool& started, int& yourScor
 		computerScore = 0;
 	}
 
-	ResetGame(you, b, started, yourScore, h);
+	ResetGame(you, ball, started, h);
 
 }
-void ResetGame(Player& you, Ball& b, bool& started, int& yourScore, HANDLE& h)
+
+void ResetGame(Player& you, Ball& b, bool& started, HANDLE& h)
 {
 	//Cho qua bong ve tri ban dau
 	b.SetX(WIDTH_BODER / 2 - 1);
@@ -61,7 +65,7 @@ void ResetGame(Player& you, Ball& b, bool& started, int& yourScore, HANDLE& h)
 	b.SetX(WIDTH_BODER / 2 - 1);
 	b.SetY((HEIGHT_BODER + 8) / 2);
 
-	yourScore = 0;
+	you.setScore(0);
 }
 
 void DrawBorder(HANDLE& h)
@@ -71,35 +75,24 @@ void DrawBorder(HANDLE& h)
 	//Ve khung
 	SetConsoleTextAttribute(h, 12); //Tao mau cho khung choi
 	//Tao chu PONG
-
-	for (int i = 0; i < 13; i++)
+	for (int i = 0; i < 24; i++)
 	{
-		cout << ' ';
-	}
-	for (int i = 20; i < 64; i++)
-	{
-
 		cout << (char)(220);
 
 		switch (i) {
-		case 25: case 26: case 32: case 38: case 45: case 51: case 57:
+		case 5: case 11: case 17:
 			cout << ' ';
 			break;
-
+		default:
+			break;
 		}
-
 	}
 
 	cout << endl;
-	for (int i = 0; i < 13; i++)
-	{
-		cout << ' ';
-	}
-	for (int i = 20; i < 64; i++)
-	{
+
+	for (int i = 0; i < 24; i++) {
 		switch (i) {
-		case 20: case 24: case 25: case 26: case 30: case 31: case 38:
-		case 42: case 43: case 47: case 48: case 52: case 53:
+		case 0: case 4: case 5: case 9: case 10: case 14: case 15:
 			cout << (char)(219);
 			break;
 		default:
@@ -110,27 +103,20 @@ void DrawBorder(HANDLE& h)
 	}
 
 	cout << endl;
-	for (int i = 0; i < 13; i++)
-	{
-		cout << ' ';
-	}
-	for (int i = 20; i < 64; i++)
+
+	for (int i = 0; i < 24; i++)
 	{
 		switch (i) {
-		case 20: case 25:
-		case 39: case 44:
+		case 0: case 5:
 			cout << (char)(219);
 			continue;
-		case 21: case 22: case 23: case 24: case 35: case 36:
-		case 40: case 41: case 42: case 43: case 58: case 59:
+		case 1: case 2: case 3: case 4: case 19: case 20:
 			cout << (char)(220);
 			continue;
-		case 27: case 28: case 32: case 33:
-		case 46: case 50: case 51: case 55: case 56:
+		case 7: case 11: case 12: case 16: case 17:
 			cout << (char)(219);
 			break;
-		case 37:
-		case 60:
+		case 21:
 			cout << (char)(220);
 			break;
 		default:
@@ -141,15 +127,11 @@ void DrawBorder(HANDLE& h)
 	}
 
 	cout << endl;
-	for (int i = 0; i < 13; i++)
-	{
-		cout << ' ';
-	}
-	for (int i = 20; i < 64; i++)
+
+	for (int i = 0; i < 24; i++)
 	{
 		switch (i) {
-		case 20: case 26: case 27: case 31: case 32: case 36:
-		case 38: case 44: case 49: case 48: case 53: case 54: case 58:
+		case 0: case 6: case 10: case 11: case 15: case 16: case 20:
 			cout << (char)(219);
 			break;
 		default:
@@ -160,27 +142,20 @@ void DrawBorder(HANDLE& h)
 	}
 
 	cout << endl;
-	for (int i = 0; i < 13; i++)
-	{
-		cout << ' ';
-	}
 
-	for (int i = 20; i < 64; i++)
+	for (int i = 0; i < 24; i++)
 	{
 		switch (i) {
-		case 20: case 26: case 27: case 31: case 37:
-		case 39: case 50: case 51: case 55: case 61:
+		case 0: case 11: case 12: case 16: case 22:
 			cout << (char)(219);
 			break;
-		case 32:
-		case 45:
+		case 6:
 			cout << (char)(219);
 			continue;
-		case 56:
+		case 17:
 			cout << (char)(219);
 			continue;
-		case 33: case 34: case 35: case 36:
-		case 46: case 47: case 48: case 49: case 57: case 58: case 59: case 60:
+		case 7: case 8: case 9: case 10: case 18: case 19: case 20: case 21:
 			cout << (char)(220);
 			continue;
 		default:
@@ -247,194 +222,45 @@ void DrawBorder(HANDLE& h)
 }
 
 
-
-void setListBox(vector<Box>& list, const int& level)
-{
-	int heightOfList = 6;
-	int sizeList = list.size();
-	Box temp;
-	int widthBox = temp.Width();
-	int heightBox = temp.Height();
-
-	if (sizeList == 0)
-	{
-
-		int numBox = 0;
-		for (int i = 0; i < heightOfList; i++)
-		{
-			numBox += (WIDTH_BODER - 2 * (i + 2)) / widthBox;
-		}
-
-		for (int i = 0; i < numBox + heightBox; i++)
-		{
-			list.push_back(Box());
-		}
-	}
-
-	int index = 0;
-	int dum = 0;
-	for (int i = TOP_BODER + 1; i < TOP_BODER + heightOfList; i += heightBox)
-	{
-		for (int j = LEFT_BODER + dum; j < WIDTH_BODER - dum - widthBox; j += widthBox)
-		{
-			list[index].setScore(rand() % 10 + level * 5);
-			list[index].setColor(rand() % 4);
-			list[index].setX(j);
-			list[index].setY(i);
-			index++;
-		}
-		dum += 2;
-	}
-
-	while ((int)list.size() > index)
-	{
-		list.pop_back();
-	}
-}
-
-void displayListBox(vector<Box>& list)
-{
-	int size = list.size();
-
-	for (int i = 0; i < size; i++)
-	{
-		list[i].displayBox();
-	}
-}
-
-bool checkBallCollideBox(Ball& ball, vector<Box>& list, int& score)
-{
-	int size = list.size();
-	char maxBox = 3;//Toi da bong chi cham duoc ba Box
-	bool isCollide = false;
-	bool flag = false;//kiem tra neu dong thoi va cham goc va giua thi uu tien va cham giua
-	Box* p = NULL;
-
-	for (int i = 0; i < size; i++)
-	{
-		//va cham o giua
-		if (!list[i].IsBreak() && ball.Y() - 1 == list[i].Y() && ball.X() < list[i].X() + list[i].Width() && ball.X() >= list[i].X())
-		{
-
-			list[i].hideBox();
-			score += list[i].Score();
-			isCollide = true;
-			ball.SetVY(ball.VY() * -1);
-			flag = true;
-
-		}//va cham hai ben
-		else if (!list[i].IsBreak() && ball.Y() == list[i].Y() && (ball.X() == list[i].X() + list[i].Width() || ball.X() == list[i].X() - 1) && ball.VX() != 0)
-		{
-			list[i].hideBox();
-			score += list[i].Score();
-			isCollide = true;
-			ball.SetVX(ball.VX() * -1);
-
-		}
-		//va cham o goc nhon
-		if (!list[i].IsBreak() && ball.Y() - 1 == list[i].Y() && ((ball.X() == list[i].X() + list[i].Width() && ball.VX() < 0) || (ball.X() == list[i].X() - 1 && ball.VX() > 0)))
-		{
-			p = &list[i];
-
-		}
-	}
-
-	if (!flag && p)
-	{
-		p->hideBox();
-		score += p->Score();
-
-		ball.SetVY(ball.VY() * -1);
-		ball.SetVX(ball.VX() * -1);
-	}
-
-	return isCollide;
-}
-
-void saveAchievement(int level, int score)
-{
-	fstream f;
-	f.open("achievement.txt", ios::app);
-
-	if (f.is_open())
-	{
-		f << endl << score << "\n" << level;
-		f.close();
-	}
-
-}
-
-void showAchievemert(HANDLE h)
-{
-	fstream f;
-	f.open("achievement.txt", ios::in);
-
-	if (f.is_open())
-	{
-		SetConsoleTextAttribute(h, 9);
-		int i = 6;
-		string lineScore, lineLevel;
-		gotoXY(WIDTH_BODER + 5, HEIGHT_BODER / 4 + 2, h);
-
-		cout << "ACHIEVEMENT TABLE";
-
-		SetConsoleTextAttribute(h, 10);
-		gotoXY(WIDTH_BODER + 6, HEIGHT_BODER / 4 + 4, h);
-
-		cout << "LEVEL     SCORE";
-
-		while (!f.eof())
-		{
-			gotoXY(WIDTH_BODER + 8, HEIGHT_BODER / 4 + i, h);
-			getline(f, lineScore);
-			getline(f, lineLevel);
-			cout << lineLevel << "        ";
-			cout << lineScore;
-			i++;
-		}
-
-		f.close();
-	}
-	else
-	{
-		gotoXY(WIDTH_BODER / 2, HEIGHT_BODER / 3, h);
-		cout << "Loi trong qua trinh mo file\n";
-	}
-}
-
 void loadGame(char mode, int& level)
 {
 
 	fstream f;
-	string lineLevel;
+	string lineLevel, lineScore;
 
-	if (mode == '2')
+	if (mode == '1')//choi tiep
 	{
-		level = 1;
-		f.open("achievement.txt", ios::out);
-		f.close();
-		return;
-	}
+		f.open("achievement.txt", ios::in);
 
-	f.open("achievement.txt", ios::in);
-
-	if (f.is_open())
-	{
-		while (!f.eof())
+		if (f.is_open())
 		{
-			getline(f, lineLevel);
+			while (!f.eof())
+			{
+				getline(f, lineLevel);
+				getline(f, lineScore);
+			}
+
+			f.close();
 		}
 
+		level = tryParseInt(lineLevel) +1;
+
+		if (level <= 0)
+		{
+			level = 1;
+		}
+	}
+	else
+	{
+		f.open("achievement.txt", ios::out);//mo va xoa het du lieu trong file
 		f.close();
 	}
-
-	level = tryParseInt(lineLevel) + 1;
 }
 
 
 void stagePingpongBox(Player you, Ball ball, HANDLE h)
 {
-
+	//khai bao bien hang so
 	const int MAX_LEVEL = 10;
 	const int time_play = 2;
 	const int seconds = 60;
@@ -442,19 +268,17 @@ void stagePingpongBox(Player you, Ball ball, HANDLE h)
 	char key;
 	vector <Box> listBox;
 
-	int level = 1;
-	int yourScore = 0;
 	bool started = false;
 	bool isWait = false;
 
 	clock_t start = 0, end = 0;
-	double cpu_time_used = 0;
+	double time_used = 0;
+	//ve man hinh chuan bi cho man choi
 	gotoXY(0, HEIGHT_BODER + 7, h);
 	SetConsoleTextAttribute(h, 15);
-	std::cout << "       Your score:" << yourScore << "\t\t      Level    : " << level << endl;
+	std::cout << "       Your score:" << you.Score() << "\t\t      Level    : " << you.getLevel() << endl;
 	//Ve va tao mau cho thanh choi cua minh
 	you.Draw(h);
-
 
 	//---------------- Chon che do choi --------------------------
 	gotoXY(WIDTH_BODER / 2 - 10, HEIGHT_BODER / 2 + 5, h);
@@ -462,35 +286,39 @@ void stagePingpongBox(Player you, Ball ball, HANDLE h)
 	std::cout << "Choi tiep    :    nhan 1";
 	gotoXY(WIDTH_BODER / 2 - 10, HEIGHT_BODER / 2 + 7, h);
 	std::cout << "Choi lai     :    nhan 2";
+
 	do
 	{
 		key = _getch();
 	} while (key != '1' && key != '2');
 
-	loadGame(key, level);
+	int tempLevel = 1;
+	loadGame(key, tempLevel);//tai game tu file
+	you.setLevel(tempLevel);
 
+	//Xoa dong chu chon che do
 	gotoXY(WIDTH_BODER / 2 - 10, HEIGHT_BODER / 2 + 5, h);
 	std::cout << "                          ";
 	gotoXY(WIDTH_BODER / 2 - 10, HEIGHT_BODER / 2 + 7, h);
 	std::cout << "                           ";
 
-	setListBox(listBox, level);
-	displayListBox(listBox);
+	//khoi tao va hien thi day box
+	Box::setListBox(listBox, you.getLevel());
+	Box::displayListBox(listBox);
+
+	//hien thi diem ban dau va level
 	gotoXY(0, HEIGHT_BODER + 7, h);
 	SetConsoleTextAttribute(h, 15);
-	std::cout << "       Your score:" << yourScore << "\t\t      Level    : " << level << endl;
+	std::cout << "       Your score:" << you.Score()  << "\t\t      Level    : " << you.getLevel() << endl;
+	you.showAchievemert(h);//hien thi thanh tich
 
-	gotoXY(55, 15, h);
-	SetConsoleTextAttribute(h, 13);
-	std::cout << "     Phim ese de thoat" << endl;
-
-	//-------------------------------------------------------------
-
+	//bat dau vong lap game
 	while (true) {
-		//PlaySound(TEXT("a.mp3"), NULL, SND_FILENAME | SND_ASYNC);
-		start = clock();
 
-		showAchievemert(h);
+		start = clock();//tin thoi gian
+
+	
+
 		if (GetAsyncKeyState(VK_ESCAPE)) {
 			break;//ket thuc tro choi
 		}
@@ -503,41 +331,46 @@ void stagePingpongBox(Player you, Ball ball, HANDLE h)
 				SetConsoleTextAttribute(h, 9);
 				you.Draw(h);
 			}
+			//Kiem tra bong va cham vao box
+			int tempScore = you.Score();
+			bool isCollide = ball.checkBallCollideBox(listBox, tempScore);
+			you.setScore(tempScore);
 
-			if (checkBallCollideBox(ball, listBox, yourScore))
+			if (isCollide)
 			{
 				gotoXY(0, HEIGHT_BODER + 7, h);
 				SetConsoleTextAttribute(h, 15);
-				std::cout << "       Your score:" << yourScore << "    ";
-
+				std::cout << "       Your score:" << you.Score() << "    ";
 			}
-
 
 			//vi tri moi cua qua bong
 			ball.SetX(ball.X() + ball.VX());
 			ball.SetY(ball.Y() + ball.VY());
 
-			if (ball.Y() >= HEIGHT_BODER + 5 || cpu_time_used / seconds >= time_play)
+			//Kiem tra ket thuc luot choi
+			//Neu bong cham day hoac het thoi gian
+			if (ball.Y() >= HEIGHT_BODER + 5 || time_used / seconds >= time_play)
 			{
-				if (yourScore >= 200 + level * 50)
+				//Kiem tra diem co du qua man khong
+				if (you.Score() >= 200 + you.getLevel() * 50)
 				{
 					gotoXY(WIDTH_BODER / 2 - 12, (HEIGHT_BODER + 5) / 2 + 7, h);
 					SetConsoleTextAttribute(h, 10);
 					std::cout << " <<<<<  LEVEL   UP >>>>>";
 
-					saveAchievement(level, yourScore);
-					level = level <= MAX_LEVEL ? level + 1 : MAX_LEVEL;
-
+					you.saveAchievement();//Luu thanh tich
+					tempLevel = you.getLevel() <= MAX_LEVEL ? you.getLevel() + 1 : MAX_LEVEL;//Tang level
+					//hien thi diem
 					gotoXY(0, HEIGHT_BODER + 7, h);
 					SetConsoleTextAttribute(h, 15);
-					std::cout << "       Your score: 0\t\t      Level    : " << level << endl;
-
+					std::cout << "       Your score: 0    \t      Level    : " << you.getLevel() << endl;
+					you.showAchievemert(h);//hien thi thanh tich
 				}
-
-				cpu_time_used = 0;
-				ResetGame(you, ball, started, yourScore, h);
-				setListBox(listBox, level);
-				displayListBox(listBox);
+				//Reset lai cac gia tri
+				time_used = 0;
+				ResetGame(you, ball, started, h);
+				Box::setListBox(listBox, you.getLevel());
+				Box::displayListBox(listBox);
 
 				you.Draw(h);
 			}
@@ -549,35 +382,36 @@ void stagePingpongBox(Player you, Ball ball, HANDLE h)
 				{
 					ball.SetVY(ball.VY() * -1);
 					int temp = ball.VX() < 0 ? -1 : 1;
-					ball.SetVX(abs(ball.X() - you.X()) * temp);
+
+					ball.SetVX(abs(ball.X() - you.X()) / 2 * temp);//dieu chinh huong bong
 					ball.SetY(you.Y() - 1);
 				}
 			}
 
-			if (ball.Y() <= TOP_BODER)
-			{
-				ball.SetVY(ball.VY() * -1);
-			}
-
-			//Kiem tra bong cham 2 bien
-			if (ball.X() <= 1) {
+			//Kiem tra bong cham bien
+			if (ball.X() <= 1) {//bong cham bien trai
 				ball.SetVX(ball.VX() * -1);
 				ball.SetX(LEFT_BODER + 1);
 			}
-			else if (ball.X() >= WIDTH_BODER - 3) {
+			else if (ball.X() >= WIDTH_BODER - 3) {//bong cham bien phai
 				ball.SetVX(ball.VX() * -1);
 				ball.SetX(WIDTH_BODER - 3);
 			}
+			else if (ball.Y() <= TOP_BODER )//bong cham bien tren
+			{
+				ball.SetVY(ball.VY()*-1);
+			}
+
 
 			//Ve va tao mau cho qua bong
 			ball.Draw(h);
 
-			Sleep(delay - 10 * level);
+			Sleep(delay - 10 * you.getLevel());//dieu chinh toc do bong
 
 		}
 		else
 		{
-
+			//tam dung man choi
 			isWait = true;
 			if (isWait) {
 				gotoXY(WIDTH_BODER / 2 - 12, (HEIGHT_BODER + 5) / 2 + 5, h);
@@ -592,6 +426,8 @@ void stagePingpongBox(Player you, Ball ball, HANDLE h)
 			}
 
 			if (GetAsyncKeyState(VK_SPACE)) { //Khi nhan phim Space tu ban phim thi tro choi bat dau
+				//Xoa cac dong chu hien thi trong khi dung game
+
 				gotoXY(WIDTH_BODER / 2 - 12, (HEIGHT_BODER + 5) / 2 + 5, h);
 				std::cout << "                          ";
 
@@ -616,12 +452,12 @@ void stagePingpongBox(Player you, Ball ball, HANDLE h)
 
 		if (started)
 		{
+			//Hien thi dong ho dem thoi gian
 			setfill('0');
-
-			cpu_time_used += (double)(end - start) / CLOCKS_PER_SEC;
+			time_used += (double)(end - start) / CLOCKS_PER_SEC;
 			gotoXY(60, 38, h);
-			std::cout << setw(2) << (int)cpu_time_used / seconds;
-			cout << " : " << setw(2) << (int)cpu_time_used % seconds;
+			std::cout << setw(2) << (int)time_used / seconds;
+			cout << " : " << setw(2) << (int)time_used % seconds;
 		}
 	}
 }
@@ -903,10 +739,12 @@ void playPingpong(Player you, Player computer)
 		}
 	}
 
+
 }
 
 void menu(char& key, HANDLE h)
 {
+	system("cls");
 	SetConsoleTextAttribute(h, 10);
 
 	//vẽ chữ MENU
@@ -947,6 +785,7 @@ void DrawMenu(char& key, HANDLE& h)
 	//Ve khung
 	SetConsoleTextAttribute(h, 12); //Tao mau cho khung choi
 	//Tao chu PONG
+
 
 	for (int i = 0; i < 13; i++)
 	{
@@ -1112,3 +951,5 @@ void DrawMenu(char& key, HANDLE& h)
 //	} while (key != '1' && key != '2' && key != '3' && key != '0');
 //
 //}
+
+
