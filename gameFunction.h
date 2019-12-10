@@ -8,8 +8,6 @@
 #include <vector>
 #include <iomanip>
 #include <conio.h>
-static const int TOP_BODER = 6;
-const int LEFT_BODER = 1;
 
 //An con tro chuot tren man hinh
 //Khoa kich thuoc man hinh
@@ -22,32 +20,14 @@ void Nocursortype();
 void ResetResult(Player& you, Player& com, Ball& b, bool& started, int& yourScore, int& computerScore, HANDLE& h);
 
 //Reset toa do bong, thanh truot , diem
-void ResetGame(Player& you, Ball& b, bool& started, int& yourScore, HANDLE& h);
+//su dung trong man choi 2
+void ResetGame(Player& you, Ball& b, bool& started,  HANDLE& h);
 
 // Ve khung man hinh
 void DrawBorder(HANDLE &h);
 
-
-//Khoi tao cac thong so cho danh sach cac hop
-void setListBox(vector<Box>& list, const int & level);
-
-//Hien thi cac hop ra man hinh
-void displayListBox(vector<Box>& list);
-
-//Kiem tra su va cham cua bong va cac hop
-bool checkBallCollideBox(Ball& ball, vector<Box>& list,int &score );
-
-//Luu thanh tich vao file
-void saveAchievement(int level, int score);
-
-//Hien thi bang thanh tich
-void showAchievemert(HANDLE h);
-
 //Tai du lieu game tu file
 void loadGame(char mode,int &level);
-
-
-
 
 //Man choi bong va hop
 void stagePingpongBox(Player you, Ball ball, HANDLE h);
