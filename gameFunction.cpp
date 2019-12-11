@@ -226,11 +226,16 @@ void loadGame(char mode, int& level)
 {
 
 	fstream f;
+<<<<<<< Updated upstream
 	string lineLevel = "", lineScore;
+=======
+	string lineLevel, lineScore;
+>>>>>>> Stashed changes
 
 	if (mode == '1')//choi tiep
 	{
 		f.open("achievement.txt", ios::in);
+<<<<<<< Updated upstream
 
 		while (f.is_open() && !f.eof())
 		{
@@ -240,12 +245,27 @@ void loadGame(char mode, int& level)
 			} while (!f.eof() && lineLevel.empty());
 
 			getline(f, lineScore);
+=======
 
+		if (f.is_open())
+		{
+			while (!f.eof())
+			{
+				getline(f, lineLevel);
+				getline(f, lineScore);
+			}
+>>>>>>> Stashed changes
+
+			f.close();
 		}
 
+<<<<<<< Updated upstream
 		f.close();
 
 		level = tryParseInt(lineLevel) + 1;
+=======
+		level = tryParseInt(lineLevel) +1;
+>>>>>>> Stashed changes
 
 		if (level <= 0)
 		{
@@ -307,11 +327,19 @@ void stagePingpongBox(Player you, Ball ball, HANDLE h)
 	//khoi tao va hien thi day box
 	Box::setListBox(listBox, you.getLevel());
 	Box::displayListBox(listBox);
+<<<<<<< Updated upstream
 	you.setScore(250);
 	//hien thi diem ban dau va level
 	gotoXY(0, HEIGHT_BODER + 7, h);
 	SetConsoleTextAttribute(h, 15);
 	std::cout << "       Your score:" << you.Score() << "\t\t      Level    : " << you.getLevel() << endl;
+=======
+
+	//hien thi diem ban dau va level
+	gotoXY(0, HEIGHT_BODER + 7, h);
+	SetConsoleTextAttribute(h, 15);
+	std::cout << "       Your score:" << you.Score()  << "\t\t      Level    : " << you.getLevel() << endl;
+>>>>>>> Stashed changes
 	you.showAchievemert(h);//hien thi thanh tich
 
 	//bat dau vong lap game
@@ -319,7 +347,11 @@ void stagePingpongBox(Player you, Ball ball, HANDLE h)
 
 		start = clock();//tin thoi gian
 
+<<<<<<< Updated upstream
 
+=======
+	
+>>>>>>> Stashed changes
 
 		if (GetAsyncKeyState(VK_ESCAPE)) {
 			break;//ket thuc tro choi
@@ -356,13 +388,23 @@ void stagePingpongBox(Player you, Ball ball, HANDLE h)
 				//Kiem tra diem co du qua man khong
 				if (you.Score() >= 200 + you.getLevel() * 50)
 				{
+<<<<<<< Updated upstream
 					isLevelUp = true;
 					
 
+=======
+					gotoXY(WIDTH_BODER / 2 - 12, (HEIGHT_BODER + 5) / 2 + 7, h);
+					SetConsoleTextAttribute(h, 10);
+					std::cout << " <<<<<  LEVEL   UP >>>>>";
+
+					you.saveAchievement();//Luu thanh tich
+					tempLevel = you.getLevel() <= MAX_LEVEL ? you.getLevel() + 1 : MAX_LEVEL;//Tang level
+>>>>>>> Stashed changes
 					//hien thi diem
 					gotoXY(0, HEIGHT_BODER + 7, h);
 					SetConsoleTextAttribute(h, 15);
 					std::cout << "       Your score: 0    \t      Level    : " << you.getLevel() << endl;
+<<<<<<< Updated upstream
 
 					you.saveAchievement();//Luu thanh tich
 					you.showAchievemert(h);//hien thi thanh tich
@@ -371,6 +413,9 @@ void stagePingpongBox(Player you, Ball ball, HANDLE h)
 					you.setLevel(tempLevel);
 
 
+=======
+					you.showAchievemert(h);//hien thi thanh tich
+>>>>>>> Stashed changes
 				}
 				//Reset lai cac gia tri
 				time_used = 0;
@@ -397,14 +442,24 @@ void stagePingpongBox(Player you, Ball ball, HANDLE h)
 				if (ball.Y() == you.Y() - 1)
 				{
 					ball.SetVY(ball.VY() * -1);
+<<<<<<< Updated upstream
 					ball.SetVX(ball.VX()*-1);
 				}
 				else if (ball.Y() == you.Y())//bong cham hai ben thanh
 				{
 					ball.SetVX(ball.VX()*-1);
+=======
+					int temp = ball.VX() < 0 ? -1 : 1;
+
+					ball.SetVX(abs(ball.X() - you.X()) / 2 * temp);//dieu chinh huong bong
+					ball.SetY(you.Y() - 1);
+>>>>>>> Stashed changes
 				}
 
+<<<<<<< Updated upstream
 			}
+=======
+>>>>>>> Stashed changes
 			//Kiem tra bong cham bien
 			if (ball.X() <= 1) {//bong cham bien trai
 				ball.SetVX(ball.VX() * -1);
@@ -414,10 +469,18 @@ void stagePingpongBox(Player you, Ball ball, HANDLE h)
 				ball.SetVX(ball.VX() * -1);
 				ball.SetX(WIDTH_BODER - 3);
 			}
+<<<<<<< Updated upstream
 			else if (ball.Y() <= TOP_BODER)//bong cham bien tren
 			{
 				ball.SetVY(ball.VY()*-1);
 			}
+=======
+			else if (ball.Y() <= TOP_BODER )//bong cham bien tren
+			{
+				ball.SetVY(ball.VY()*-1);
+			}
+
+>>>>>>> Stashed changes
 
 			//Ve va tao mau cho qua bong
 			ball.Draw(h);
@@ -427,7 +490,10 @@ void stagePingpongBox(Player you, Ball ball, HANDLE h)
 		}
 		else
 		{
+<<<<<<< Updated upstream
 			SetConsoleTextAttribute(h, 15);
+=======
+>>>>>>> Stashed changes
 			//tam dung man choi
 			isWait = true;
 			if (isWait)
@@ -467,8 +533,16 @@ void stagePingpongBox(Player you, Ball ball, HANDLE h)
 				color %= temp;
 			}
 
+<<<<<<< Updated upstream
 			if (GetAsyncKeyState(VK_SPACE) || !isWait) { //Khi nhan phim Space tu ban phim thi tro choi bat dau
 				//Xoa cac dong chu hien thi trong khi dung game
+=======
+			if (GetAsyncKeyState(VK_SPACE)) { //Khi nhan phim Space tu ban phim thi tro choi bat dau
+				//Xoa cac dong chu hien thi trong khi dung game
+
+				gotoXY(WIDTH_BODER / 2 - 12, (HEIGHT_BODER + 5) / 2 + 5, h);
+				std::cout << "                          ";
+>>>>>>> Stashed changes
 
 				gotoXY(WIDTH_BODER / 2 - 12, (HEIGHT_BODER + 5) / 2 + 5, h);
 				std::cout << "                          ";//xoa dong chu Press the space to start!
@@ -504,7 +578,11 @@ void stagePingpongBox(Player you, Ball ball, HANDLE h)
 void playPingpong(Player you, Player computer)
 {
 	//khoi tao cac bien
+<<<<<<< Updated upstream
 	int maxSpeed = 3;
+=======
+	int maxSpeed = 2;
+>>>>>>> Stashed changes
 	const int delay = 110;
 	const double second = 5.000;
 	const int numItem = 2;
@@ -572,7 +650,10 @@ void playPingpong(Player you, Player computer)
 	//bat dau vong chay
 	while (true) {
 
+<<<<<<< Updated upstream
 		//phim Esc de tro lai nemu
+=======
+>>>>>>> Stashed changes
 		if (GetAsyncKeyState(VK_ESCAPE)) {
 			break;
 		}
@@ -580,8 +661,14 @@ void playPingpong(Player you, Player computer)
 		if (GetAsyncKeyState(VK_RETURN))
 		{
 			SaveToFile(yourScore, computerScore);
+<<<<<<< Updated upstream
 
 		}
+=======
+
+		}
+
+>>>>>>> Stashed changes
 
 		//ve diem lên man hình
 		gotoXY(55, 13, h);
@@ -630,6 +717,10 @@ void playPingpong(Player you, Player computer)
 			}
 
 			you.getItem(listItem, numItem, h);
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 
 			//vi tri moi cua qua bong
 			ball.SetX(ball.X() + ball.VX());
@@ -758,7 +849,10 @@ void playPingpong(Player you, Player computer)
 		//đem thoi gian
 		duration = (double)(end - start) / CLOCKS_PER_SEC;
 
+<<<<<<< Updated upstream
 		//resest thoi gian ve muc 0
+=======
+>>>>>>> Stashed changes
 		if (duration > timeDisplayItem&& started)
 		{
 			for (int i = 0; i < numItem; i++)
@@ -791,6 +885,7 @@ void playPingpong(Player you, Player computer)
 			}
 		}
 	}
+
 
 }
 
