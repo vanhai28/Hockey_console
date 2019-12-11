@@ -73,8 +73,12 @@ bool Ball:: checkBallCollideBox(vector<Box>& list, int& score)
 			flag = true;//da co va cham khac va cham goc
 		}
 		//va cham o goc nhon
+<<<<<<< Updated upstream
 		if (!list[i].IsBreak() && ((_x == list[i].X() + list[i].Width() && _vx < 0) || (_x == list[i].X() - 1 && _vx > 0)) 
 			&&((_y - 1 == list[i].Y() && _vy<0)	||(_y +1 == list[i].Y() && _vy > 0)))
+=======
+		if (!list[i].IsBreak() && _y - 1 == list[i].Y() && ((_x == list[i].X() + list[i].Width() && _vx < 0) || (_x == list[i].X() - 1 && _vx > 0)))
+>>>>>>> Stashed changes
 		{
 			//luu dia chi box bi va cham
 			p = &list[i];
