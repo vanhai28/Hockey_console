@@ -2,9 +2,10 @@
 #include <Windows.h>
 #include <iostream>
 #include "Item.h"
+#include "ConstVariable.h"
+
 using namespace std;
-const int WIDTH_BODER = 55; // Chieu ngang san dau
-const int HEIGHT_BODER = 35;
+
 
 class Player
 {
@@ -14,6 +15,7 @@ private:
 	int _ox, _oy; // Toa do (x, y) cu cua thanh choi
 	int _vx; // Van toc di chuyen thanh choi
 	int score;
+	int level;
 public:
 	//getter & setter
 	void SetX(int x) { _x = x; }
@@ -37,6 +39,9 @@ public:
 	int Score() { return score; }
 	void setScore(int val) { score = val; }
 
+	void setLevel(int val) { level = val; }
+	int getLevel() { return level; }
+
 	bool move();
 
 
@@ -46,6 +51,11 @@ public:
 	Player(int, int, int); // Khoi tao
 	void Draw(HANDLE&); // Ve thanh choi
 
+	void saveAchievement();
+
 	void getItem(Item  item[], int numItem, HANDLE&h);
+
+	//Hien thi bang thanh tich
+	void showAchievemert(HANDLE h);
 };
 
