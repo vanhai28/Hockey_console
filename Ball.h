@@ -1,8 +1,13 @@
+// Dinh nghia lop Ball
 #pragma once
 #include <Windows.h>
 #include <iostream>
 #include "Box.h"
+<<<<<<< Updated upstream
 
+=======
+#include "CommonFunction.h"
+>>>>>>> Stashed changes
 using namespace std;
 
 class Ball
