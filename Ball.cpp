@@ -24,19 +24,12 @@ Ball::Ball(int x, int y) {
 // Chuc nang: Ve qua bong
 void Ball::Draw(HANDLE& h) {
 	SetConsoleTextAttribute(h, 15);
-	COORD c;
-	//Vi tri cu
-	c.X = int(_ox);
-	c.Y = int(_oy);
+	gotoXY(_ox, _oy,h);
 
-	SetConsoleCursorPosition(h, c);
 	//Xoa vi tri cu
 	cout << ' ';
 	//Vi tri moi
-	c.X = int(_x);
-	c.Y = int(_y);
-
-	SetConsoleCursorPosition(h, c);
+	gotoXY(_x, _y, h);
 	SetConsoleTextAttribute(h, 6);
 	//Ve vi tri moi
 	cout <<(char)(233);
@@ -80,7 +73,12 @@ bool Ball:: checkBallCollideBox(vector<Box>& list, int& score)
 			flag = true;//da co va cham khac va cham goc
 		}
 		//va cham o goc nhon
+<<<<<<< Updated upstream
 		if (!list[i].IsBreak() && _y - 1 == list[i].Y() && ((_x == list[i].X() + list[i].Width() && _vx < 0) || (_x == list[i].X() - 1 && _vx > 0)))
+=======
+		if (!list[i].IsBreak() && ((_x == list[i].X() + list[i].Width() && _vx < 0) || (_x == list[i].X() - 1 && _vx > 0)) 
+			&&((_y - 1 == list[i].Y() && _vy<0)	||(_y +1 == list[i].Y() && _vy > 0)))
+>>>>>>> Stashed changes
 		{
 			//luu dia chi box bi va cham
 			p = &list[i];
