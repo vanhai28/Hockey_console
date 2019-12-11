@@ -4,7 +4,9 @@
 
 bool Player::move()
 {
-	bool isMove = false;
+	bool isMove = false;//khoi tao trang thai di chuyen la false
+
+	//xu li nhan phim di chuyen
 	if (GetAsyncKeyState(VK_LEFT)) {
 		SetX(_x - 2);
 		isMove = true;
@@ -84,12 +86,18 @@ void Player::getItem(Item item[], int numItem, HANDLE&h)
 	{
 		if (item[i].Y() >= _y - 1 && item[i].Y() <= _y && item[i].X() >= _x - _size && item[i].X() < _x + _size) {
 
+<<<<<<< Updated upstream
 			item[i].deleteItem(h);
 			/*HANDLE h;
 			h = GetStdHandle(STD_OUTPUT_HANDLE);
 			Draw(h);*/
 			item[i].setIsMove(false);
 
+=======
+			item[i].deleteItem(h);//Xoa item tren man hinh
+			item[i].setIsMove(false);//dat trang thai di chuyen cua item ve false
+			//tang diem theo item nhan duoc
+>>>>>>> Stashed changes
 			switch (item[i].getCatory())
 			{
 			case 0:
@@ -105,7 +113,7 @@ void Player::getItem(Item item[], int numItem, HANDLE&h)
 				score -= 10;
 				break;
 			}
-
+			//Loai bo truong hop diem am
 			score = score > 0 ? score : 0;
 		}
 	}
@@ -114,12 +122,22 @@ void Player::getItem(Item item[], int numItem, HANDLE&h)
 void Player::saveAchievement()
 {
 	fstream f;
+<<<<<<< Updated upstream
 	f.open("achievement.txt", ios::app);
 
 	if (f.is_open())
 	{
 		f << endl << level << endl << score;
 		f.close();
+=======
+	f.open("achievement.txt", ios::app);//mo file
+
+	if (f.is_open())
+	{
+		//ghi level va diem vao file
+		f << endl << level << endl << score;
+		f.close();//dong file
+>>>>>>> Stashed changes
 	}
 
 }
@@ -127,18 +145,31 @@ void Player::saveAchievement()
 void Player::showAchievemert(HANDLE h)
 {
 	fstream f;
+<<<<<<< Updated upstream
 	f.open("achievement.txt", ios::in);
 
 	if (f.is_open())
 	{
 		SetConsoleTextAttribute(h, 9);
 		int i = 6;
+=======
+	f.open("achievement.txt", ios::in);//mo file
+
+	if (f.is_open())
+	{
+		SetConsoleTextAttribute(h, 9);//dat gia tri cho mau sac chu
+		int i = 6;//tao khoang cach in moi dong trong bang thanh tich
+>>>>>>> Stashed changes
 		string lineScore, lineLevel;
 		gotoXY(WIDTH_BODER + 5, HEIGHT_BODER / 4 + 2, h);
 
 		cout << "ACHIEVEMENT TABLE";
 
+<<<<<<< Updated upstream
 		SetConsoleTextAttribute(h, 10);
+=======
+		SetConsoleTextAttribute(h, 10);//dat gia tri cho mau sac chu
+>>>>>>> Stashed changes
 		gotoXY(WIDTH_BODER + 6, HEIGHT_BODER / 4 + 4, h);
 
 		cout << "LEVEL     SCORE";
@@ -147,9 +178,18 @@ void Player::showAchievemert(HANDLE h)
 		{
 			gotoXY(WIDTH_BODER + 8, HEIGHT_BODER / 4 + i, h);
 
+<<<<<<< Updated upstream
 			getline(f, lineLevel);
 			getline(f, lineScore);
 
+=======
+			do {
+				getline(f, lineLevel);//doc level tu file
+			} while (lineLevel.empty() && !f.eof());
+			
+			getline(f, lineScore);//doc diem tu file
+			//xuat ra man hinh level va diem
+>>>>>>> Stashed changes
 			cout << lineLevel << "        ";
 			cout << lineScore;
 			i++;
@@ -159,7 +199,12 @@ void Player::showAchievemert(HANDLE h)
 	}
 	else
 	{
+<<<<<<< Updated upstream
 		gotoXY(WIDTH_BODER / 2, HEIGHT_BODER / 3, h);
+=======
+		//neu khong doc duoc file thi hien thi thong bao loi
+		gotoXY(WIDTH_BODER + 8, HEIGHT_BODER / 4 + 6, h);
+>>>>>>> Stashed changes
 		cout << "Loi trong qua trinh mo file\n";
 	}
 }
