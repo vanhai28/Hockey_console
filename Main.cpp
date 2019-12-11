@@ -41,7 +41,11 @@ int main()
 	
 	do
 	{
+<<<<<<< Updated upstream
 		menu(key, h);
+=======
+		showMenu(key, h);
+>>>>>>> Stashed changes
 
 		switch (key)
 		{
@@ -55,7 +59,11 @@ int main()
 			stagePingpongBox(you, ball, h);
 			break;
 		case '3':
+<<<<<<< Updated upstream
 			//Huong dan
+=======
+			ReadGuide(key, h);
+>>>>>>> Stashed changes
 			break;
 		case '0':
 			//Thoat
