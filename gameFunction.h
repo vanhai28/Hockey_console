@@ -2,7 +2,6 @@
 #include "Box.h"
 #include <iostream>
 #include <ctime>
-#include <Windows.h>
 #include "Ball.h"
 #include "Player.h"
 #include <vector>
@@ -32,6 +31,7 @@ void loadGame(char mode,int &level);
 //Man choi bong va hop
 void stagePingpongBox(Player you, Ball ball, HANDLE h);
 
+<<<<<<< Updated upstream
 void playPingpong(Player you, Player computer);
 
 void menu(char& key, HANDLE h);
@@ -39,3 +39,15 @@ void menu(char& key, HANDLE h);
 void DrawMenu(char& key, HANDLE& h);
 
 
+=======
+//Man choi voi may
+void playPingpong(Player you, Player computer);
+
+//Ve man hinh menu
+void DrawMenu(char& key, HANDLE& h);
+
+void showMenu(char& key, HANDLE h);
+
+//Hien thi chuc nang huong dan trong game
+void ReadGuide(char& key, HANDLE& h);
+>>>>>>> Stashed changes
