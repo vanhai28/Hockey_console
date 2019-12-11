@@ -226,12 +226,17 @@ void loadGame(char mode, int& level)
 {
 
 	fstream f;
+<<<<<<< Updated upstream
 	string lineLevel, lineScore;
+=======
+	string lineLevel = "", lineScore;
+>>>>>>> Stashed changes
 
 	if (mode == '1')//choi tiep
 	{
 		f.open("achievement.txt", ios::in);
 
+<<<<<<< Updated upstream
 		if (f.is_open())
 		{
 			while (!f.eof())
@@ -239,11 +244,27 @@ void loadGame(char mode, int& level)
 				getline(f, lineLevel);
 				getline(f, lineScore);
 			}
+=======
+		while (f.is_open() && !f.eof())
+		{
+			do
+			{
+				getline(f, lineLevel);
+			} while (!f.eof() && lineLevel.empty());
+
+			getline(f, lineScore);
+>>>>>>> Stashed changes
 
 			f.close();
 		}
 
+<<<<<<< Updated upstream
 		level = tryParseInt(lineLevel) +1;
+=======
+		f.close();
+
+		level = tryParseInt(lineLevel) + 1;
+>>>>>>> Stashed changes
 
 		if (level <= 0)
 		{
@@ -269,7 +290,7 @@ void stagePingpongBox(Player you, Ball ball, HANDLE h)
 	vector <Box> listBox;
 
 	bool started = false;
-	bool isWait = false;
+	bool isWait = false, isLevelUp = false;
 
 	clock_t start = 0, end = 0;
 	double time_used = 0;
@@ -305,19 +326,34 @@ void stagePingpongBox(Player you, Ball ball, HANDLE h)
 	//khoi tao va hien thi day box
 	Box::setListBox(listBox, you.getLevel());
 	Box::displayListBox(listBox);
+<<<<<<< Updated upstream
 
 	//hien thi diem ban dau va level
 	gotoXY(0, HEIGHT_BODER + 7, h);
 	SetConsoleTextAttribute(h, 15);
 	std::cout << "       Your score:" << you.Score()  << "\t\t      Level    : " << you.getLevel() << endl;
+=======
+	you.setScore(250);
+	//hien thi diem ban dau va level
+	gotoXY(0, HEIGHT_BODER + 7, h);
+	SetConsoleTextAttribute(h, 15);
+	std::cout << "       Your score:" << you.Score() << "\t\t      Level    : " << you.getLevel() << endl;
+>>>>>>> Stashed changes
 	you.showAchievemert(h);//hien thi thanh tich
 
 	//bat dau vong lap game
 	while (true) {
+<<<<<<< Updated upstream
 
 		start = clock();//tin thoi gian
 
 	
+=======
+
+		start = clock();//tin thoi gian
+
+
+>>>>>>> Stashed changes
 
 		if (GetAsyncKeyState(VK_ESCAPE)) {
 			break;//ket thuc tro choi
@@ -354,17 +390,34 @@ void stagePingpongBox(Player you, Ball ball, HANDLE h)
 				//Kiem tra diem co du qua man khong
 				if (you.Score() >= 200 + you.getLevel() * 50)
 				{
+<<<<<<< Updated upstream
 					gotoXY(WIDTH_BODER / 2 - 12, (HEIGHT_BODER + 5) / 2 + 7, h);
 					SetConsoleTextAttribute(h, 10);
 					std::cout << " <<<<<  LEVEL   UP >>>>>";
 
 					you.saveAchievement();//Luu thanh tich
 					tempLevel = you.getLevel() <= MAX_LEVEL ? you.getLevel() + 1 : MAX_LEVEL;//Tang level
+=======
+					isLevelUp = true;
+					
+
+>>>>>>> Stashed changes
 					//hien thi diem
 					gotoXY(0, HEIGHT_BODER + 7, h);
 					SetConsoleTextAttribute(h, 15);
 					std::cout << "       Your score: 0    \t      Level    : " << you.getLevel() << endl;
+<<<<<<< Updated upstream
 					you.showAchievemert(h);//hien thi thanh tich
+=======
+
+					you.saveAchievement();//Luu thanh tich
+					you.showAchievemert(h);//hien thi thanh tich
+
+					tempLevel = you.getLevel() <= MAX_LEVEL ? you.getLevel() + 1 : MAX_LEVEL;//Tang level
+					you.setLevel(tempLevel);
+
+
+>>>>>>> Stashed changes
 				}
 				//Reset lai cac gia tri
 				time_used = 0;
@@ -376,18 +429,39 @@ void stagePingpongBox(Player you, Ball ball, HANDLE h)
 			}
 
 			//Kiem tra bong cham thanh choi cua ban
-			if (ball.Y() >= you.Y() - 1 && ball.Y() <= you.Y()) {
+			if (ball.Y() >= you.Y() - 1 && ball.Y() <= you.Y() && ball.X() > you.X() - you.Size() && ball.X() < you.X() + you.Size())
+			{
+				ball.SetVY(ball.VY() * -1);
+				int temp = ball.VX() < 0 ? -1 : 1;
 
-				if (ball.X() >= you.X() - you.Size() && ball.X() <= you.X() + you.Size())
+				ball.SetVX(abs(ball.X() - you.X()) / 2 * temp);//dieu chinh huong bong
+				ball.SetY(you.Y() - 1);
+			}
+
+			if ((ball.X() == you.X() - you.Size() && ball.VX() > 0) || (ball.X() == you.X() + you.Size() && ball.VX() < 0))
+			{
+				//bong cham goc nhon thi bat nguoc lai
+				if (ball.Y() == you.Y() - 1)
 				{
 					ball.SetVY(ball.VY() * -1);
+<<<<<<< Updated upstream
 					int temp = ball.VX() < 0 ? -1 : 1;
 
 					ball.SetVX(abs(ball.X() - you.X()) / 2 * temp);//dieu chinh huong bong
 					ball.SetY(you.Y() - 1);
+=======
+					ball.SetVX(ball.VX()*-1);
 				}
-			}
+				else if (ball.Y() == you.Y())//bong cham hai ben thanh
+				{
+					ball.SetVX(ball.VX()*-1);
+>>>>>>> Stashed changes
+				}
 
+<<<<<<< Updated upstream
+=======
+			}
+>>>>>>> Stashed changes
 			//Kiem tra bong cham bien
 			if (ball.X() <= 1) {//bong cham bien trai
 				ball.SetVX(ball.VX() * -1);
@@ -397,11 +471,18 @@ void stagePingpongBox(Player you, Ball ball, HANDLE h)
 				ball.SetVX(ball.VX() * -1);
 				ball.SetX(WIDTH_BODER - 3);
 			}
+<<<<<<< Updated upstream
 			else if (ball.Y() <= TOP_BODER )//bong cham bien tren
 			{
 				ball.SetVY(ball.VY()*-1);
 			}
 
+=======
+			else if (ball.Y() <= TOP_BODER)//bong cham bien tren
+			{
+				ball.SetVY(ball.VY()*-1);
+			}
+>>>>>>> Stashed changes
 
 			//Ve va tao mau cho qua bong
 			ball.Draw(h);
@@ -411,40 +492,74 @@ void stagePingpongBox(Player you, Ball ball, HANDLE h)
 		}
 		else
 		{
+<<<<<<< Updated upstream
+=======
+			SetConsoleTextAttribute(h, 15);
+>>>>>>> Stashed changes
 			//tam dung man choi
 			isWait = true;
-			if (isWait) {
+			if (isWait)
+			{
 				gotoXY(WIDTH_BODER / 2 - 12, (HEIGHT_BODER + 5) / 2 + 5, h);
-				SetConsoleTextAttribute(h, 15);
 				std::cout << "Press the space to start!";
 
-				SetConsoleTextAttribute(h, 15);
+				gotoXY(WIDTH_BODER / 2 - 12, (HEIGHT_BODER + 5) / 2 + 3, h);
+				cout << "Diem chuan level " << you.getLevel() << " la " << 200 + you.getLevel() * 50;
 
 				gotoXY(WIDTH_BODER / 2 - 2, HEIGHT_BODER + 4, h);
-
 				std::cout << "You";
 			}
+			
+			
+			int temp = 9, color = 0;
+			while (isWait && isLevelUp)
+			{
+				SetConsoleTextAttribute(h, 10 + color);
+				for (int i = 0; i < temp ; i++)
+				{
+					if (GetAsyncKeyState(VK_SPACE))
+					{
+						isWait = false;
+						isLevelUp = false;
+						break;				
+					}
+					gotoXY(WIDTH_BODER / 2 - 7 - i, (HEIGHT_BODER + 5) / 2 + 7, h);
+					cout << "<";
+					gotoXY(WIDTH_BODER / 2 - 4, (HEIGHT_BODER + 5) / 2 + 7, h);
+					cout << "LEVEL   UP";
+					gotoXY(WIDTH_BODER / 2 + 7 + i, (HEIGHT_BODER + 5) / 2 + 7, h);
+					cout << ">";
+					Sleep(60);
+				}
+				color++;
+				color %= temp;
+			}
 
+<<<<<<< Updated upstream
 			if (GetAsyncKeyState(VK_SPACE)) { //Khi nhan phim Space tu ban phim thi tro choi bat dau
 				//Xoa cac dong chu hien thi trong khi dung game
 
 				gotoXY(WIDTH_BODER / 2 - 12, (HEIGHT_BODER + 5) / 2 + 5, h);
 				std::cout << "                          ";
+=======
+			if (GetAsyncKeyState(VK_SPACE) || !isWait) { //Khi nhan phim Space tu ban phim thi tro choi bat dau
+				//Xoa cac dong chu hien thi trong khi dung game
+>>>>>>> Stashed changes
 
-				gotoXY(WIDTH_BODER / 2 - 10, (HEIGHT_BODER + 5) / 2 + 3, h);
-				std::cout << "                       ";
+				gotoXY(WIDTH_BODER / 2 - 12, (HEIGHT_BODER + 5) / 2 + 5, h);
+				std::cout << "                          ";//xoa dong chu Press the space to start!
 
-				gotoXY(WIDTH_BODER / 2 - 12, (HEIGHT_BODER + 5) / 2 + 7, h);
-				std::cout << "                                ";
+				gotoXY(WIDTH_BODER / 2 - 12, (HEIGHT_BODER + 5) / 2 + 3, h);
+				std::cout << "                            ";//xoa dong chu Diem chuan level 
 
-				gotoXY(WIDTH_BODER / 2 - 4, 6, h);
-				std::cout << "        ";
+				gotoXY(WIDTH_BODER / 2 - 16, (HEIGHT_BODER + 5) / 2 + 7, h);
+				std::cout << "                                ";//xoa dong chu level up
 
 				gotoXY(WIDTH_BODER / 2 - 2, HEIGHT_BODER + 4, h);
-				std::cout << "   ";
+				std::cout << "   ";// xoa chu you
 
-				started = true;
-				isWait = false;
+				started = true;//thiet lap trang thai bat dau choi
+				isWait = false;//bo che do cho
 			}
 		}
 
@@ -531,6 +646,10 @@ void playPingpong(Player you, Player computer)
 	//bat dau vong chay
 	while (true) {
 
+<<<<<<< Updated upstream
+=======
+		//phim Esc de tro lai nemu
+>>>>>>> Stashed changes
 		if (GetAsyncKeyState(VK_ESCAPE)) {
 			break;//ket thuc tro choi
 		}
@@ -545,7 +664,11 @@ void playPingpong(Player you, Player computer)
 		//ve diem lên man hình
 		gotoXY(55, 13, h);
 		SetConsoleTextAttribute(h, 15);
+<<<<<<< Updated upstream
 		std::cout << "    Your score:" << yourScore << endl;
+=======
+		std::cout << "Your :" << yourScore << "-" << computerScore << ": Computer";
+>>>>>>> Stashed changes
 
 		gotoXY(55, 11, h);
 		std::cout << "    Coputer score:" << computerScore << endl;
@@ -592,15 +715,14 @@ void playPingpong(Player you, Player computer)
 
 			you.getItem(listItem, numItem, h);
 
-
 			//vi tri moi cua qua bong
 			ball.SetX(ball.X() + ball.VX());
 			ball.SetY(ball.Y() + ball.VY());
 
 
 			// Kiem tra bong cham thanh choi cua may
-			if (ball.Y() <= computer.Y() + 1 && ball.Y() >= computer.Y()) {
-
+			if (ball.Y() <= computer.Y() + 1 && ball.Y() >= computer.Y()) 
+			{
 				if (ball.X() > computer.X() - computer.Size() && ball.X() < computer.X() + computer.Size()) {
 					ball.SetVY(ball.VY() * -1);
 					ball.SetVX(ball.VX() + ball.X() - computer.X() / 3);
@@ -670,7 +792,18 @@ void playPingpong(Player you, Player computer)
 				isWait = true;
 			}
 
+<<<<<<< Updated upstream
 			if (GetAsyncKeyState(VK_SPACE)) { //Khi nhan phim Space tu ban phim thi tro choi bat dau
+=======
+			//Khi nhan phim Space tu ban phim thi tro choi bat dau
+			if (GetAsyncKeyState(VK_SPACE)) {
+
+				//reset lai thoi gin item
+				duration = 0;
+				listItem[index].deleteItem(h);
+				listItem[index].setIsMove(false);
+
+>>>>>>> Stashed changes
 				c.X = WIDTH_BODER / 2 - 12;
 				c.Y = (HEIGHT_BODER + 5) / 2 + 5;
 				SetConsoleCursorPosition(h, c);
@@ -742,7 +875,12 @@ void playPingpong(Player you, Player computer)
 
 }
 
+<<<<<<< Updated upstream
 void menu(char& key, HANDLE h)
+=======
+//lua chon cho menu
+void showMenu(char& key, HANDLE h)
+>>>>>>> Stashed changes
 {
 	system("cls");
 	SetConsoleTextAttribute(h, 10);
@@ -778,15 +916,22 @@ void menu(char& key, HANDLE h)
 
 }
 
+<<<<<<< Updated upstream
 void DrawMenu(char& key, HANDLE& h)
+=======
+void ReadGuide(char& key, HANDLE& h)
+>>>>>>> Stashed changes
 {
 	system("cls");
 	gotoXY(0, 0, h);
 	//Ve khung
 	SetConsoleTextAttribute(h, 12); //Tao mau cho khung choi
 	//Tao chu PONG
+<<<<<<< Updated upstream
 
 
+=======
+>>>>>>> Stashed changes
 	for (int i = 0; i < 13; i++)
 	{
 		cout << ' ';
@@ -904,7 +1049,197 @@ void DrawMenu(char& key, HANDLE& h)
 
 		cout << ' ';
 	}
+<<<<<<< Updated upstream
 	//Ket thuc tao chu PONG
+	gotoXY(20, 10, h);
+	cout << (char)219;
+	for (int i = 1; i < 36; i++)
+	{
+		cout << (char)219;
+	}
+	gotoXY(20, 39, h);
+	cout << (char)219;
+	for (int i = 1; i < 36; i++)
+	{
+		cout << (char)219;
+	}
+	cout << (char)219;
+	for (int i = 10; i < 40; i++)
+=======
+	//ket thuc tao ch oing pong
+
+	//hien thi hung dan len console
+	while (1)
+>>>>>>> Stashed changes
+	{
+		//chon ese de tro lai menu
+		if (GetAsyncKeyState(VK_ESCAPE)) {
+			break;//ket thuc tro choi
+		}
+		fstream fileguide;
+		fileguide.open("Guide.txt", ios::in);
+
+		//kiem tra file
+		if (fileguide.fail())
+		{
+			cout << "khong mo duoc file!" << endl;
+			return;
+		}
+
+		//moi file de doc va luu vao token
+		string token = " ";
+		string line;
+		while (!fileguide.eof())
+		{
+			getline(fileguide, line);
+			token += "\n";
+			token += line;
+		}
+
+		fileguide.close();
+
+		//hien thi token ra man hin console
+		gotoXY(11, 8, h);
+		SetConsoleTextAttribute(h, 10);
+		cout << token;
+
+
+	}
+<<<<<<< Updated upstream
+	menu(key, h);
+
+=======
+
+}
+
+//ve menu game
+void DrawMenu(char& key, HANDLE& h)
+{
+	system("cls");
+	gotoXY(0, 0, h);
+	//Ve khung
+	SetConsoleTextAttribute(h, 12); //Tao mau cho khung choi
+	//Tao chu PING PONG
+	for (int i = 0; i < 13; i++)
+	{
+		cout << ' ';
+	}
+	for (int i = 20; i < 64; i++)
+	{
+
+		cout << (char)(220);
+
+		switch (i) {
+		case 25: case 26: case 32: case 38: case 45: case 51: case 57:
+			cout << ' ';
+			break;
+
+		}
+
+	}
+
+	cout << endl;
+	for (int i = 0; i < 13; i++)
+	{
+		cout << ' ';
+	}
+	for (int i = 20; i < 64; i++)
+	{
+		switch (i) {
+		case 20: case 24: case 25: case 26: case 30: case 31: case 38:
+		case 42: case 43: case 47: case 48: case 52: case 53:
+			cout << (char)(219);
+			break;
+		default:
+			break;
+		}
+
+		cout << ' ';
+	}
+
+	cout << endl;
+	for (int i = 0; i < 13; i++)
+	{
+		cout << ' ';
+	}
+	for (int i = 20; i < 64; i++)
+	{
+		switch (i) {
+		case 20: case 25:
+		case 39: case 44:
+			cout << (char)(219);
+			continue;
+		case 21: case 22: case 23: case 24: case 35: case 36:
+		case 40: case 41: case 42: case 43: case 58: case 59:
+			cout << (char)(220);
+			continue;
+		case 27: case 28: case 32: case 33:
+		case 46: case 50: case 51: case 55: case 56:
+			cout << (char)(219);
+			break;
+		case 37:
+		case 60:
+			cout << (char)(220);
+			break;
+		default:
+			break;
+		}
+
+		cout << ' ';
+	}
+
+	cout << endl;
+	for (int i = 0; i < 13; i++)
+	{
+		cout << ' ';
+	}
+	for (int i = 20; i < 64; i++)
+	{
+		switch (i) {
+		case 20: case 26: case 27: case 31: case 32: case 36:
+		case 38: case 44: case 49: case 48: case 53: case 54: case 58:
+			cout << (char)(219);
+			break;
+		default:
+			break;
+		}
+
+		cout << ' ';
+	}
+
+	cout << endl;
+	for (int i = 0; i < 13; i++)
+	{
+		cout << ' ';
+	}
+
+	for (int i = 20; i < 64; i++)
+	{
+		switch (i) {
+		case 20: case 26: case 27: case 31: case 37:
+		case 39: case 50: case 51: case 55: case 61:
+			cout << (char)(219);
+			break;
+		case 32:
+		case 45:
+			cout << (char)(219);
+			continue;
+		case 56:
+			cout << (char)(219);
+			continue;
+		case 33: case 34: case 35: case 36:
+		case 46: case 47: case 48: case 49: case 57: case 58: case 59: case 60:
+			cout << (char)(220);
+			continue;
+		default:
+			break;
+		}
+
+		cout << ' ';
+	}
+	//Ket thuc tao chu PHING PONG
+
+	//bat dau ve khung cho me nu
 	gotoXY(20, 10, h);
 	cout << (char)219;
 	for (int i = 1; i < 36; i++)
@@ -925,8 +1260,9 @@ void DrawMenu(char& key, HANDLE& h)
 		gotoXY(56, i, h);
 		cout << (char)219;
 	}
-	menu(key, h);
-
+	//hien thi cac lua chon cho menu
+	showMenu(key, h);
+>>>>>>> Stashed changes
 }
 //void menu(char& key, HANDLE h)
 //{
@@ -951,5 +1287,7 @@ void DrawMenu(char& key, HANDLE& h)
 //	} while (key != '1' && key != '2' && key != '3' && key != '0');
 //
 //}
+
+
 
 
