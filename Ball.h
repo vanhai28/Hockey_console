@@ -1,7 +1,9 @@
+// Dinh nghia lop Ball
 #pragma once
 #include <Windows.h>
 #include <iostream>
-
+#include "Box.h"
+#include "CommonFunction.h"
 using namespace std;
 
 class Ball
@@ -34,5 +36,8 @@ public:
 	~Ball();
 	Ball(int, int); // Khoi tao
 	void Draw(HANDLE&); // Ve qua bong
+
+	//Kiem tra su va cham cua bong va cac hop
+	bool checkBallCollideBox( vector<Box>& list, int &score);
 };
 
