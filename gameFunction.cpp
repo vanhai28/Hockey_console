@@ -21,6 +21,9 @@ void Nocursortype()
 
 void ResetResult(Player& you, Player& com, Ball& b, bool& started, int& yourScore, int& computerScore, HANDLE& h) {
 
+	//luu diem
+	savebest(you.Score());
+
 	you.setScore(0);
 	COORD pos;
 
@@ -31,13 +34,17 @@ void ResetResult(Player& you, Player& com, Ball& b, bool& started, int& yourScor
 
 	if (yourScore == 3) {
 		SetConsoleCursorPosition(h, pos);
-		cout << ">>>>>> YOU WIN! <<<<<<";
+		cout << ">>>>>> YOU WIN! <<<<<<" << endl;
+		cout << "DIEM SO CAO NHAT: " << Maxscore() << endl;
+		
 		yourScore = 0;
 		computerScore = 0;
 	}
 	else if (computerScore == 3) {
 		SetConsoleCursorPosition(h, pos);
 		cout << ">>>> COMPUTER WIN <<<<";
+		cout << "diem so cao nhat xu ban: " << Maxscore() << endl;
+
 		yourScore = 0;
 		computerScore = 0;
 	}
@@ -189,7 +196,7 @@ void DrawBorder(HANDLE& h)
 
 		cout << ' ';
 	}
-	//Ket thuc tao chu PONG
+	//Ket thuc tao chu PING PONG
 
 	//Bat dau ve khung
 	cout << endl;
@@ -203,7 +210,7 @@ void DrawBorder(HANDLE& h)
 	{
 
 		cout << (char)(219);
-		for (int i = 0; i < WIDTH_BODER - 3; ++i)
+		for (int j = 0; j < WIDTH_BODER - 3; ++j)
 			cout << ' ';
 		cout << (char)(219);
 		cout << "\n";
@@ -245,8 +252,6 @@ void DrawBorder(HANDLE& h)
 	cout << (char)(188);
 	//Ket thuc ve khung
 }
-
-
 
 void setListBox(vector<Box>& list, const int& level)
 {
@@ -629,7 +634,7 @@ void stagePingpongBox(Player you, Ball ball, HANDLE h)
 void playPingpong(Player you, Player computer)
 {
 	//khoi tao cac bien
-	int maxSpeed = 2;
+	int maxSpeed = 3;
 	const int delay = 110;
 	const double second = 5.000;
 	const int numItem = 2;
@@ -646,6 +651,8 @@ void playPingpong(Player you, Player computer)
 	int computerScore = 0;
 	double duration = 0;
 	char key;
+	int index = 0;
+
 
 	srand((int)time(0));
 	//Khoi tao
@@ -661,7 +668,7 @@ void playPingpong(Player you, Player computer)
 	SetConsoleTextAttribute(h, 10);
 	std::cout << "Choi tiep    :    nhan 1";
 	gotoXY(WIDTH_BODER / 2 - 10, HEIGHT_BODER / 2 + 7, h);
-	std::cout << "Choi lai     :    nhan 2";
+	std::cout << "Load game     :    nhan 2";
 	do
 	{
 		key = _getch();
@@ -695,8 +702,9 @@ void playPingpong(Player you, Player computer)
 	//bat dau vong chay
 	while (true) {
 
+		//phim ế de tro lai nemu
 		if (GetAsyncKeyState(VK_ESCAPE)) {
-			break;//ket thuc tro choi
+			break;
 		}
 		//luu vao file
 		if (GetAsyncKeyState(VK_RETURN))
@@ -705,16 +713,13 @@ void playPingpong(Player you, Player computer)
 
 		}
 
-
 		//ve diem lên man hình
 		gotoXY(55, 13, h);
 		SetConsoleTextAttribute(h, 15);
-		std::cout << "    Your score:" << yourScore << endl;
+		std::cout << "Your :" << yourScore << "-"<< computerScore << ": Computer";
 
-		gotoXY(55, 11, h);
-		std::cout << "    Coputer score:" << computerScore << endl;
 		gotoXY(55, 15, h);
-		std::cout << "    score:" << you.Score() << endl;
+		std::cout << "  score:" << you.Score() << endl;
 
 		if (started) {
 
@@ -815,13 +820,14 @@ void playPingpong(Player you, Player computer)
 				//Di chuyen con tro toi vi tri (c.X, c.Y)
 				SetConsoleCursorPosition(h, c);
 
+				//nhan space de tiep tuc gme
 				SetConsoleTextAttribute(h, 15);
 				cout << "Press the space to start!";
 				SetConsoleTextAttribute(h, 15);
 
 				c.X = WIDTH_BODER / 2 - 4;
 				c.Y = 6;
-
+				
 				SetConsoleCursorPosition(h, c);
 				cout << "Computer";
 
@@ -834,7 +840,14 @@ void playPingpong(Player you, Player computer)
 				isWait = true;
 			}
 
-			if (GetAsyncKeyState(VK_SPACE)) { //Khi nhan phim Space tu ban phim thi tro choi bat dau
+			//Khi nhan phim Space tu ban phim thi tro choi bat dau
+			if (GetAsyncKeyState(VK_SPACE)) { 
+
+				//reset lai thoi gin item
+				duration = 0;
+				listItem[index].deleteItem(h);
+				listItem[index].setIsMove(false);
+
 				c.X = WIDTH_BODER / 2 - 12;
 				c.Y = (HEIGHT_BODER + 5) / 2 + 5;
 				SetConsoleCursorPosition(h, c);
@@ -872,8 +885,11 @@ void playPingpong(Player you, Player computer)
 
 		Sleep(delay);
 		end = clock();
+
+		//đem thoi gian
 		duration = (double)(end - start) / CLOCKS_PER_SEC;
 
+		//resest thoi gian ve muc 0
 		if (duration > timeDisplayItem&& started)
 		{
 			for (int i = 0; i < numItem; i++)
@@ -890,22 +906,27 @@ void playPingpong(Player you, Player computer)
 			duration = 0;
 		}
 
+		//ve cac item 
 		for (int i = 0; i < numItem - 1 && started; i++)
 		{
 			listItem[i].move();
 			listItem[i].Draw(h);
 
+			index = i;
+
 			if (listItem[i].Y() >= HEIGHT_BODER + 3)
 			{
 				listItem[i].deleteItem(h);
 				listItem[i].setIsMove(false);
+
 			}
 		}
 	}
 
 }
 
-void menu(char& key, HANDLE h)
+//lua chon cho menu
+void Choosemenu(char& key, HANDLE h)
 {
 	SetConsoleTextAttribute(h, 10);
 
@@ -940,14 +961,14 @@ void menu(char& key, HANDLE h)
 
 }
 
+//ve menu game
 void DrawMenu(char& key, HANDLE& h)
 {
 	system("cls");
 	gotoXY(0, 0, h);
 	//Ve khung
 	SetConsoleTextAttribute(h, 12); //Tao mau cho khung choi
-	//Tao chu PONG
-
+	//Tao chu PING PONG
 	for (int i = 0; i < 13; i++)
 	{
 		cout << ' ';
@@ -1065,7 +1086,9 @@ void DrawMenu(char& key, HANDLE& h)
 
 		cout << ' ';
 	}
-	//Ket thuc tao chu PONG
+	//Ket thuc tao chu PHING PONG
+
+	//bat dau ve khung cho me nu
 	gotoXY(20, 10, h);
 	cout << (char)219;
 	for (int i = 1; i < 36; i++)
@@ -1086,29 +1109,174 @@ void DrawMenu(char& key, HANDLE& h)
 		gotoXY(56, i, h);
 		cout << (char)219;
 	}
-	menu(key, h);
+	//hien thi cac lua chon cho menu
+	Choosemenu(key, h);
+}
+
+
+//doc file huong dan
+void ReadGuide(char& key, HANDLE& h)
+{
+	system("cls");
+	gotoXY(0, 0, h);
+	//Ve khung
+	SetConsoleTextAttribute(h, 12); //Tao mau cho khung choi
+	//Tao chu PONG
+	for (int i = 0; i < 13; i++)
+	{
+		cout << ' ';
+	}
+	for (int i = 20; i < 64; i++)
+	{
+
+		cout << (char)(220);
+
+		switch (i) {
+		case 25: case 26: case 32: case 38: case 45: case 51: case 57:
+			cout << ' ';
+			break;
+
+		}
+
+	}
+
+	cout << endl;
+	for (int i = 0; i < 13; i++)
+	{
+		cout << ' ';
+	}
+	for (int i = 20; i < 64; i++)
+	{
+		switch (i) {
+		case 20: case 24: case 25: case 26: case 30: case 31: case 38:
+		case 42: case 43: case 47: case 48: case 52: case 53:
+			cout << (char)(219);
+			break;
+		default:
+			break;
+		}
+
+		cout << ' ';
+	}
+
+	cout << endl;
+	for (int i = 0; i < 13; i++)
+	{
+		cout << ' ';
+	}
+	for (int i = 20; i < 64; i++)
+	{
+		switch (i) {
+		case 20: case 25:
+		case 39: case 44:
+			cout << (char)(219);
+			continue;
+		case 21: case 22: case 23: case 24: case 35: case 36:
+		case 40: case 41: case 42: case 43: case 58: case 59:
+			cout << (char)(220);
+			continue;
+		case 27: case 28: case 32: case 33:
+		case 46: case 50: case 51: case 55: case 56:
+			cout << (char)(219);
+			break;
+		case 37:
+		case 60:
+			cout << (char)(220);
+			break;
+		default:
+			break;
+		}
+
+		cout << ' ';
+	}
+
+	cout << endl;
+	for (int i = 0; i < 13; i++)
+	{
+		cout << ' ';
+	}
+	for (int i = 20; i < 64; i++)
+	{
+		switch (i) {
+		case 20: case 26: case 27: case 31: case 32: case 36:
+		case 38: case 44: case 49: case 48: case 53: case 54: case 58:
+			cout << (char)(219);
+			break;
+		default:
+			break;
+		}
+
+		cout << ' ';
+	}
+
+	cout << endl;
+	for (int i = 0; i < 13; i++)
+	{
+		cout << ' ';
+	}
+
+	for (int i = 20; i < 64; i++)
+	{
+		switch (i) {
+		case 20: case 26: case 27: case 31: case 37:
+		case 39: case 50: case 51: case 55: case 61:
+			cout << (char)(219);
+			break;
+		case 32:
+		case 45:
+			cout << (char)(219);
+			continue;
+		case 56:
+			cout << (char)(219);
+			continue;
+		case 33: case 34: case 35: case 36:
+		case 46: case 47: case 48: case 49: case 57: case 58: case 59: case 60:
+			cout << (char)(220);
+			continue;
+		default:
+			break;
+		}
+
+		cout << ' ';
+	}
+	//ket thuc tao ch oing pong
+
+	//hien thi hung dan len console
+	while (1)
+	{
+		//chon ese de tro lai menu
+		if (GetAsyncKeyState(VK_ESCAPE)) {
+			break;//ket thuc tro choi
+		}
+		fstream fileguide;
+		fileguide.open("Guide.txt", ios::in);
+		
+		//kiem tra file
+		if (fileguide.fail())
+		{
+			cout << "khong mo duoc file!" << endl;
+			return;
+		}
+
+		//moi file de doc va luu vao token
+		string token=" ";
+		string line;
+		while (!fileguide.eof())
+		{
+			getline(fileguide, line);
+			token += "\n";
+			token+= line;
+		}
+
+		fileguide.close();
+
+		//hien thi token ra man hin console
+		gotoXY(11, 8, h);
+		SetConsoleTextAttribute(h, 10);
+		cout << token;
+
+
+	}
 
 }
-//void menu(char& key, HANDLE h)
-//{
-//	system("cls");
-//	SetConsoleTextAttribute(h, 10);
-//
-//	gotoXY(WIDTH_BODER / 2 - 10, HEIGHT_BODER / 2 + 5, h);
-//	std::cout << "SOLO VS COMPUTER   :    Press 1";
-//
-//	gotoXY(WIDTH_BODER / 2 - 10, HEIGHT_BODER / 2 + 7, h);
-//	std::cout << "PINGPONG BOX       :    Press 2";
-//
-//	gotoXY(WIDTH_BODER / 2 - 10, HEIGHT_BODER / 2 + 9, h);
-//	std::cout << "GUIDE              :    Press 3";
-//
-//	gotoXY(WIDTH_BODER / 2 - 10, HEIGHT_BODER / 2 + 11, h);
-//	std::cout << "EXIT               :    Press 0";
-//
-//	do
-//	{
-//		key = _getch();
-//	} while (key != '1' && key != '2' && key != '3' && key != '0');
-//
-//}
+

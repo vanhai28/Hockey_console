@@ -21,7 +21,7 @@ private:
 	int cat;
 	bool is_move;
 public:
-	
+
 	//getter & setter
 	void SetX(int x) { _x = x; }
 	void SetY(int y) { _y = y; }
@@ -58,4 +58,3 @@ public:
 
 	void deleteItem(HANDLE& h);
 };
-

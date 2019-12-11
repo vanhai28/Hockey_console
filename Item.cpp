@@ -1,5 +1,6 @@
 #include "Item.h"
 #include <string>
+#include<ctime>
 
 void Item::resetCatoryRandom()
 {
@@ -44,19 +45,27 @@ Item::Item(int x, int y) {
 // Input: h(con tro su dung voi man hinh console)
 // Output: Qua bong
 // Chuc nang: Ve qua bong
-void Item::Draw(HANDLE& h) 
+void Item::Draw(HANDLE& h)
 {
+
 	if (!is_move || _y < 6) return;
 	SetConsoleTextAttribute(h, 15);
 	deleteItem(h);
 	COORD c;
-	
+
 	//Vi tri moi
 	c.X = int(_x);
 	c.Y = int(_y);
 
+	//ve mau
 	SetConsoleCursorPosition(h, c);
-	SetConsoleTextAttribute(h, 6);
+
+	//random mau cho item
+	int j;
+	srand((int)time(0));
+	j = rand() % (16);
+	SetConsoleTextAttribute(h, 1 + j);
+	
 	//Ve vi tri moi
 	cout << catory[cat];
 
@@ -83,6 +92,6 @@ void Item::deleteItem(HANDLE& h)
 
 	SetConsoleCursorPosition(h, c);
 	//Xoa vi tri cu
-	cout <<"     ";
+	cout << "     ";
 
 }
