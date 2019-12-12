@@ -4,7 +4,7 @@
 int randomRange(int start, int end)
 {
 	if (start > end || start < 0) return 0;
-
+	//tao gia tri ngau nhien
 	std::random_device rd;
 	std::mt19937 mt(rd());
 	std::uniform_int_distribution<int> dist(start, end);
