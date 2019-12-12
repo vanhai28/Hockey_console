@@ -17,7 +17,7 @@ void LoadFile(char mode, int &scoreplayer, int & scorecomputer)
 {
 	fstream loadfile;
 
-	if (mode == '1')
+	if (mode == '2')
 	{
 		scoreplayer = 0;
 		scorecomputer = 0;
@@ -37,6 +37,7 @@ void LoadFile(char mode, int &scoreplayer, int & scorecomputer)
 	}
 
 }
+
 void savebest(int score)
 {
 	fstream outfile;
