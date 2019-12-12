@@ -1,18 +1,7 @@
 #pragma once
 #include <vector>
 #include "ConstVariable.h"
-<<<<<<< Updated upstream
 //Danh sach mau sac cua box
-=======
-/*
-color:
-	26 : xam - lam
-	46 : vang - luc
-	63 : trang lam nhat
-	71 : trang - do
-
-*/
->>>>>>> Stashed changes
 static int ListColor[4] = { 26,46,63,71 };
 class Box
 {
@@ -60,18 +49,12 @@ public:
 
 public:
 	//Khoi tao cac thong so cho danh sach cac hop
-<<<<<<< Updated upstream
 	// Tham so list : danh sach box can khoi tao gia tri
 	// Tham so level : level cua nguoi choi de khoi tao diem cua box
 	static void setListBox(std::vector<Box>& list, const int & level);
 
 	//Hien thi cac hop ra man hinh
 	// Tham so list : danh sach box can hien thi
-=======
-	static void setListBox(std::vector<Box>& list, const int & level);
-
-	//Hien thi cac hop ra man hinh
->>>>>>> Stashed changes
 	static void displayListBox(std::vector<Box>& list);
 };
 
