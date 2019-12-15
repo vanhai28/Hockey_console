@@ -30,6 +30,7 @@ void Box::hideBox()
 	std::string temp = "           ";
 	std::cout << temp.substr(0, width);//xoa box tren man hinh
 	isBreak = true;//danh dau box da bi vo
+	PlaySound(L"disappear.wav", NULL, SND_FILENAME || SND_ASYNC);//phat am thanh bien mat
 }
 
 void Box::setColor(int val)
