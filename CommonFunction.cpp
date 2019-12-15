@@ -38,3 +38,20 @@ void gotoXY(int x, int y, HANDLE& h)
 	c.Y = y;
 	SetConsoleCursorPosition(h, c);
 }
+
+void sortScore(vector<playerInfor>& list)
+{
+
+	for (int i = 0; i < list.size() - 1; i++)
+	{
+		for (int j = list.size()-1; j>i; j--)
+		{
+			if (list[j-1].score < list[j].score)
+			{
+				playerInfor temp = list[j];
+				list[j] = list[j-1];
+				list[j-1] = temp;
+			}
+		}
+	}
+}
