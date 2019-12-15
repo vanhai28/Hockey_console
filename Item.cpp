@@ -12,12 +12,12 @@ void Item::resetCatoryRandom()
 	{
 		cat = 3;
 	}
-	else if (temp > 60 && temp < 80)
+	else if (temp > 60 && temp < 90)
 	{
-		cat = 0;
+		cat = 1;
 	}
 	else {
-		cat = 1;
+		cat = 0;
 	}
 }
 
