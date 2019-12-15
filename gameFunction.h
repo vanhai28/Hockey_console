@@ -31,11 +31,14 @@ void loadGame(char mode, int &level);
 //Man choi bong va hop
 void stagePingpongBox(Player you, Ball ball, HANDLE h);
 
+<<<<<<< Updated upstream
 	void playPingpong(Player you, Player computer);
 
 void menu(char& key, HANDLE h);
 
 void DrawMenu(char& key, HANDLE& h);
+=======
+>>>>>>> Stashed changes
 
 //Man choi voi may
 void playPingpong(Player you, Player computer);
@@ -46,4 +49,14 @@ void DrawMenu(char& key, HANDLE& h);
 void showMenu(char& key, HANDLE h);
 
 //Hien thi chuc nang huong dan trong game
+<<<<<<< Updated upstream
 void ReadGuide(char& key, HANDLE& h);
+=======
+void ReadGuide(char& key, HANDLE& h);
+
+//Ve dong chu PingPong
+void drawTextPingpong(HANDLE &h, int x, int y);
+
+//Hien thi top diem cao nhat va ten nguoi choi len man hinh
+void showTopBestScore(vector<playerInfor> list, HANDLE &h);
+>>>>>>> Stashed changes
