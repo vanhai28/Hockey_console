@@ -85,6 +85,7 @@ void Player::getItem(Item item[], int numItem, HANDLE&h)
 	for (int i = 0; i < numItem; i++)
 	{
 		if (item[i].Y() >= _y - 1 && item[i].Y() <= _y && item[i].X() >= _x - _size && item[i].X() < _x + _size) {
+<<<<<<< Updated upstream
 
 <<<<<<< Updated upstream
 			item[i].deleteItem(h);
@@ -94,6 +95,9 @@ void Player::getItem(Item item[], int numItem, HANDLE&h)
 			item[i].setIsMove(false);
 
 =======
+=======
+			PlaySound(L"getItem.wav", NULL, SND_FILENAME || SND_ASYNC);
+>>>>>>> Stashed changes
 			item[i].deleteItem(h);//Xoa item tren man hinh
 			item[i].setIsMove(false);//dat trang thai di chuyen cua item ve false
 			//tang diem theo item nhan duoc
@@ -115,6 +119,9 @@ void Player::getItem(Item item[], int numItem, HANDLE&h)
 			}
 			//Loai bo truong hop diem am
 			score = score > 0 ? score : 0;
+			gotoXY(0, HEIGHT_BODER + 7, h);
+			SetConsoleTextAttribute(h, 15);
+			std::cout << " Your score " << score << "  ";
 		}
 	}
 }
