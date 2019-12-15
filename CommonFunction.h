@@ -2,9 +2,12 @@
 #pragma once
 #include <string>
 #include <Windows.h>
-
+#include <vector>
 using namespace std;
-
+struct playerInfor {
+	string name;
+	int score;
+};
 //tao gia tri ngau nhien trong mot khoang cho truoc
 //Tham so start : gia tri khoi dau
 //Tham so end : gia tri ket thuc
@@ -21,3 +24,5 @@ int tryParseInt(string line);
 
 //dua con tro ghi toi vi tri (x,y)
 void gotoXY(int x, int y, HANDLE& h);
+
+void sortScore(vector< playerInfor>& list);
