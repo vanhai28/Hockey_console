@@ -85,7 +85,11 @@ void Player::getItem(Item item[], int numItem, HANDLE&h)
 	for (int i = 0; i < numItem; i++)
 	{
 		if (item[i].Y() >= _y - 1 && item[i].Y() <= _y && item[i].X() >= _x - _size && item[i].X() < _x + _size) {
+<<<<<<< Updated upstream
 
+=======
+			PlaySound(L"getItem.wav", NULL, SND_FILENAME || SND_ASYNC);
+>>>>>>> Stashed changes
 			item[i].deleteItem(h);//Xoa item tren man hinh
 			item[i].setIsMove(false);//dat trang thai di chuyen cua item ve false
 			//tang diem theo item nhan duoc
