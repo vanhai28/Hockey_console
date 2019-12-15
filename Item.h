@@ -56,6 +56,7 @@ public:
 	void Draw(HANDLE&); // Ve qua bong
 	void move();
 
+	//Xoa item tai vi tri cu
 	void deleteItem(HANDLE& h);
 };
 
