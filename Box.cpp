@@ -65,56 +65,196 @@ Box::~Box()
 
 void Box::setListBox(vector<Box>& list, const int& level)
 {
-	int heightOfList = 6;//chieu cao cua day box
-	int sizeList = list.size();
+	int heightOfList = 9;//chieu cao cua day box
+	int sizeList = (int)list.size();
 	Box temp;//bien tam de lay chieu cao va chieu rong cua box
 	int widthBox = temp.Width();
 	int heightBox = temp.Height();
-
-	//Khoi tao list neu list chua co box
-	if (sizeList == 0)
-	{
-		int numBox = 0;
-
-		for (int i = 0; i < heightOfList; i++)
-		{
-			//dem so luong box can khoi tao
-			numBox += (WIDTH_BODER - 2 * (i + 2)) / widthBox;
-		}
-
-		for (int i = 0; i < numBox + heightBox; i++)
-		{
-			//khoi tao box va them vao list
-			list.push_back(Box());
-		}
-	}
+	list.clear();
 
 	int index = 0;
 	int dum = 0;//tao khoang cach thut vao le o moi day box
 	//khoi tao vi tri cho box
-	for (int i = TOP_BODER; i < TOP_BODER + heightOfList; i += heightBox)
+	//level 1
+	int temp_1 = 4;
+	switch (level)
 	{
-		for (int j = LEFT_BODER + dum; j < WIDTH_BODER - dum - widthBox; j += widthBox)
+	case 1:
+		for (int i = TOP_BODER; i < TOP_BODER + heightOfList; i += heightBox)
 		{
-			list[index].setScore(rand() % 10 + level * 5);//khoi tao diem
-			list[index].setColor(rand() % 4);//khoi tao mau sac
-			list[index].setX(j);//khoi tao vi tri x
-			list[index].setY(i);//khoi tao vi tri y
-			list[index].setIsBreak(false);//khoi tao trang thai
-			index++;
+			for (int j = LEFT_BODER + dum; j < WIDTH_BODER - dum - widthBox; j += widthBox)
+			{
+				if (j >= LEFT_BODER + widthBox * temp_1 + dum && j < WIDTH_BODER - widthBox * temp_1 - dum - 2)
+				{
+					continue;
+				}
+
+				temp.setScore(rand() % 10 + level * 5);//khoi tao diem
+				temp.setColor(rand() % 4);//khoi tao mau sac
+				temp.setX(j);//khoi tao vi tri x
+				temp.setY(i);//khoi tao vi tri y
+				temp.setIsBreak(false);//khoi tao trang thai
+				list.push_back(temp);
+			}
+			dum += 2;
 		}
-		dum += 2;
+		break;
+	case 2:
+		//tao map cho level 2
+		temp_1 = 4;
+		heightOfList = 9;
+		dum = 8;
+		for (int i = TOP_BODER; i < TOP_BODER + heightOfList; i += heightBox)
+		{
+			for (int j = LEFT_BODER + dum; j < WIDTH_BODER - dum - widthBox; j += widthBox)
+			{
+				if (j >= LEFT_BODER + widthBox * temp_1 + dum && j < WIDTH_BODER - widthBox * temp_1 - dum - 2)
+				{
+					continue;
+				}
+
+				temp.setScore(rand() % 10 + level * 5);//khoi tao diem
+				temp.setColor(rand() % 4);//khoi tao mau sac
+				temp.setX(j);//khoi tao vi tri x
+				temp.setY(i);//khoi tao vi tri y
+				temp.setIsBreak(false);//khoi tao trang thai
+				list.push_back(temp);
+			}
+
+			if (i < TOP_BODER + 4)
+			{
+				dum -= 2;
+			}
+			else
+			{
+				dum += 2;
+			}
+
+		}
+		break;
+	case 3:
+		temp_1 = 4;
+		heightOfList = 9;
+		for (int i = TOP_BODER; i < TOP_BODER + heightOfList; i += heightBox)
+		{
+			for (int j = LEFT_BODER + dum; j < WIDTH_BODER - dum - widthBox; j += widthBox)
+			{
+				if (j >= LEFT_BODER + widthBox * temp_1 + dum && j < WIDTH_BODER - widthBox * temp_1 - dum - 2)
+				{
+					continue;
+				}
+
+				temp.setScore(rand() % 10 + level * 5);//khoi tao diem
+				temp.setColor(rand() % 4);//khoi tao mau sac
+				temp.setX(j);//khoi tao vi tri x
+				temp.setY(i);//khoi tao vi tri y
+				temp.setIsBreak(false);//khoi tao trang thai
+				list.push_back(temp);
+			}
+
+			if (i < TOP_BODER + 4)
+			{
+				dum += 2;
+			}
+			else
+			{
+				dum -= 2;
+			}
+
+		}
+		break;
+	case 4:
+		
+		//Man chu A
+		temp_1 = 3;
+		heightOfList = 8;
+		for (int i = TOP_BODER + heightOfList - 1; i > TOP_BODER; i -= heightBox)
+		{
+			for (int j = LEFT_BODER + dum; j < WIDTH_BODER - dum - widthBox; j += widthBox)
+			{
+				if (i != TOP_BODER + heightOfList - 1 - 2 * heightBox &&
+					i != TOP_BODER + heightOfList - 1 - 3 * heightBox &&
+					j >= LEFT_BODER + widthBox * temp_1 + dum && j < WIDTH_BODER - widthBox * temp_1 - dum - 2)
+				{
+					continue;
+				}
+
+				temp.setScore(rand() % 10 + level * 5);//khoi tao diem
+				temp.setColor(rand() % 4);//khoi tao mau sac
+				temp.setX(j);//khoi tao vi tri x
+				temp.setY(i);//khoi tao vi tri y
+				temp.setIsBreak(false);//khoi tao trang thai
+				list.push_back(temp);
+			}
+
+			dum += 2;
+
+
+		}
+		break;
+	case 5:
+		//tao man choi cho level 5
+		temp_1 = 6;
+
+		for (int i = TOP_BODER + 1 + 6; i > TOP_BODER; i -= heightBox)
+		{
+			for (int j = LEFT_BODER + dum; j < WIDTH_BODER - dum - widthBox; j += widthBox)
+			{
+				if (j >= LEFT_BODER + widthBox * temp_1 + dum && j < WIDTH_BODER - widthBox * temp_1 - dum - 2)
+				{
+					continue;
+				}
+
+				if (i == TOP_BODER + 1 + 6 && (j < 2 * widthBox || j > 4 * widthBox) && (j < 9 * widthBox || j > 11 * widthBox)) continue;
+				temp.setScore(rand() % 10 + level * 5);//khoi tao diem
+				temp.setColor(rand() % 4);//khoi tao mau sac
+				temp.setX(j);//khoi tao vi tri x
+				temp.setY(i);//khoi tao vi tri y
+				temp.setIsBreak(false);//khoi tao trang thailist[index].setIsBreak(false);//khoi tao trang thai
+				list.push_back(temp);
+			}
+
+			if (i != TOP_BODER + 1 + 6)
+			{
+				temp_1--;
+				dum += 2;
+			}
+
+		}
+		break;
+	default://case >= 6
+		//Man chu H
+		temp_1 = 5;
+		heightOfList = 8;
+		for (int i = TOP_BODER + heightOfList - 1; i > TOP_BODER; i -= heightBox)
+		{
+			for (int j = LEFT_BODER + widthBox; j < WIDTH_BODER - dum - 2 * widthBox; j += widthBox)
+			{
+				if (i != TOP_BODER + heightOfList - 1 - 2 * heightBox &&
+					i != TOP_BODER + heightOfList - 1 - 3 * heightBox &&
+					i != TOP_BODER + heightOfList - 1 - 4 * heightBox &&
+					j >= LEFT_BODER + widthBox * temp_1 + dum && j < WIDTH_BODER - widthBox * temp_1 - dum - 2)
+				{
+					continue;
+				}
+
+				temp.setScore(rand() % 10 + level * 5);//khoi tao diem
+				temp.setColor(rand() % 4);//khoi tao mau sac
+				temp.setX(j);//khoi tao vi tri x
+				temp.setY(i);//khoi tao vi tri y
+				temp.setIsBreak(false);//khoi tao trang thai
+				list.push_back(temp);
+			}
+		}
+		break;
+
 	}
-	//Neu qua trinh khoi tao du bõ thi loai bo bot
-	while ((int)list.size() > index)
-	{
-		list.pop_back();
-	}
+
 }
 
 void Box::displayListBox(vector<Box>& list)
 {
-	int size = list.size();
+	int size = (int)list.size();
 
 	for (int i = 0; i < size; i++)
 	{
