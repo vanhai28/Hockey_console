@@ -21,7 +21,7 @@ void Nocursortype()
 
 	//Đặt kích thước và mức độ hiển thị của con trỏ cho bộ đệm màn hình giao diện điều khiển được chỉ định.
 	CONSOLE_CURSOR_INFO Info;//Một con trỏ tới cấu trúc CONSOLE_CURSOR_INFO cung cấp các thông số kỹ thuật mới cho con trỏ bộ đệm màn hình giao diện điều khiển.
-	
+
 	Info.bVisible = FALSE;//dat trang thai hien thi la false
 	Info.dwSize = 20;// kích thước của bộ đệm màn hình giao diện điều khiển, trong các cột và hàng ký tự
 	SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &Info);//ham nay co chuc nang Đặt kích thước và mức độ hiển thị của con trỏ 
@@ -306,7 +306,7 @@ void stagePingpongBox(Player you, Ball ball, HANDLE h)
 	SetConsoleTextAttribute(h, 15);
 	std::cout << "       Your score:" << you.Score() << "\t\t      Level    : " << you.getLevel() << endl;
 	//Ve va tao mau cho thanh choi cua minh
-	you.Draw(h);
+	you.Draw(h, 9);
 
 	//---------------- Chon che do choi --------------------------
 	gotoXY(WIDTH_BODER / 2 - 10, HEIGHT_BODER / 2 + 5, h);
@@ -322,7 +322,7 @@ void stagePingpongBox(Player you, Ball ball, HANDLE h)
 
 	int tempLevel = 1;
 	loadGame(key, tempLevel);//tai game tu file
-	tempLevel = tempLevel < MAX_LEVEL ? tempLevel  : MAX_LEVEL;//Tang level
+	//tempLevel = tempLevel < MAX_LEVEL ? tempLevel  : MAX_LEVEL;//Tang level
 	you.setLevel(tempLevel);//dat lai level
 
 
@@ -342,9 +342,8 @@ void stagePingpongBox(Player you, Ball ball, HANDLE h)
 	std::cout << "       Your score:" << you.Score() << "\t\t      Level    : " << you.getLevel() << endl;
 
 	you.showAchievemert(h);//hien thi thanh tich
-	//you.setScore(520);
 	//bat dau vong lap game
-	while (true) 
+	while (true)
 	{
 		start = clock();//tin thoi gian
 
@@ -358,7 +357,7 @@ void stagePingpongBox(Player you, Ball ball, HANDLE h)
 			{
 				//Ve va tao mau cho thanh choi cua minh
 				SetConsoleTextAttribute(h, 9);
-				you.Draw(h);
+				you.Draw(h, 9);
 			}
 			//Kiem tra bong va cham vao box
 			int tempScore = you.Score();
@@ -407,7 +406,7 @@ void stagePingpongBox(Player you, Ball ball, HANDLE h)
 				Box::setListBox(listBox, you.getLevel());
 				Box::displayListBox(listBox);
 				started = false;
-				you.Draw(h);
+				you.Draw(h, 9);
 
 				//hien thi diem ban dau va level
 				gotoXY(0, HEIGHT_BODER + 7, h);
@@ -474,7 +473,7 @@ void stagePingpongBox(Player you, Ball ball, HANDLE h)
 				std::cout << "Press the space to start!";
 
 				gotoXY(WIDTH_BODER / 2 - 12, (HEIGHT_BODER + 5) / 2 + 3, h);
-				cout << "Diem chuan level " << you.getLevel() << " la " << 200 + you.getLevel() * 50;
+				cout << "Diem chuan level " << you.getLevel() << " la " << 100 + you.getLevel() * 100;
 
 				gotoXY(WIDTH_BODER / 2 - 2, HEIGHT_BODER + 4, h);
 				std::cout << "You";
@@ -504,7 +503,7 @@ void stagePingpongBox(Player you, Ball ball, HANDLE h)
 					else
 					{
 						cout << "LEVEL   UP";
-					}			
+					}
 					gotoXY(WIDTH_BODER / 2 + 7 + i, (HEIGHT_BODER + 5) / 2 + 7, h);
 					cout << ">";
 					Sleep(60);
@@ -579,13 +578,13 @@ void deleteMap(vector<Box>& list)
 
 void playPingpong(Player you, Player computer)
 {
-	Player barrier(WIDTH_BODER / 2, HEIGHT_BODER/2, 4);//rao chan bong va vat pham
+	Player barrier(WIDTH_BODER / 2, HEIGHT_BODER / 2, 4);//rao chan bong va vat pham
 	//khoi tao cac bien
 	int maxSpeed = 4;//toc do lon nhat cua bong
 	int delay = 150;
 	const int minDelay = 40;
 	const int numItem = 2;//so luong item
-	const double timeDisplayItem = 2; 
+	const double timeDisplayItem = 2;
 	const int MAX_LENGTH_NAME = 15;//chieu dai ten nguoi choi duoc nhap toi da
 	const int NUM_TOP_SCORE = 5;//So luong lay top
 	HANDLE h;
@@ -626,7 +625,7 @@ void playPingpong(Player you, Player computer)
 
 	//tai du lieu tu file
 	LoadFile(key, yourScore, computerScore, listPlayerInfor);
-	
+
 	gotoXY(WIDTH_BODER / 2 - 10, HEIGHT_BODER / 2 + 5, h);
 	std::cout << "                          ";//xoa dong continue
 	gotoXY(WIDTH_BODER / 2 - 10, HEIGHT_BODER / 2 + 7, h);
@@ -639,7 +638,7 @@ void playPingpong(Player you, Player computer)
 	//ve diem lên man hình
 	gotoXY(0, HEIGHT_BODER + 7, h);
 	SetConsoleTextAttribute(h, 15);
-	std::cout <<" Your score " << you.Score() << "Ratio Score :  You : " << yourScore << " - " << computerScore <<" : Computer";
+	std::cout << " Your score " << you.Score() << "Ratio Score :  You : " << yourScore << " - " << computerScore << " : Computer";
 
 	//dat toc do ban dau cho computer
 	computer.SetVX(0);
@@ -657,10 +656,10 @@ void playPingpong(Player you, Player computer)
 			SaveToFile(yourScore, computerScore, listPlayerInfor);
 			break;
 		}
-		
+
 
 		if (started) {
-			
+
 			//Khi nhan phim mui ten trai hoac phai thi nguoi choi se di chuyen sang trai hoac phai
 			if (GetAsyncKeyState(VK_LEFT)) {
 				you.SetX(you.X() - 2);
@@ -691,15 +690,15 @@ void playPingpong(Player you, Player computer)
 
 			//tao ranh gioi cho rao chan
 			if (barrier.X() < barrier.Size() + 3) {
-				barrier.SetX(barrier.Size() +3);
+				barrier.SetX(barrier.Size() + 3);
 				barrier.SetVX(barrier.VX()*-1);
 			}
 			else if (barrier.X() > (WIDTH_BODER - barrier.Size() - 4)) {
 				barrier.SetX(WIDTH_BODER - barrier.Size() - 4);
 				barrier.SetVX(barrier.VX()*-1);
 			}
-			barrier.SetX( barrier.X() + barrier.VX());
-			
+			barrier.SetX(barrier.X() + barrier.VX());
+
 			//Gioi han toc do cua qua bong
 			if (ball.VX() < -maxSpeed) {
 				ball.SetVX(-maxSpeed);
@@ -724,12 +723,13 @@ void playPingpong(Player you, Player computer)
 					ball.SetVY(ball.VY() * -1);
 					ball.SetVX(ball.VX() + (ball.X() - computer.X()) / 3);
 					ball.SetY(computer.Y() + 1);
-					delay = delay > minDelay ? delay - 5: minDelay;
+					delay = delay > minDelay ? delay - 5 : minDelay;
 				}
 			}
 
 			//Kiem tra va cham thanh chan
-			if (ball.Y() <= barrier.Y() + 1 && ball.Y() >= barrier.Y()-1) {
+			if ((ball.Y() == barrier.Y() + 1 && ball.VY() < 0) || (ball.VY() < 0 && ball.Y() == barrier.Y() - 1) || ball.Y() == barrier.Y())
+			{
 
 				if (ball.X() > barrier.X() - barrier.Size() && ball.X() < barrier.X() + barrier.Size()) {
 					PlaySound(L"colide.wav", NULL, SND_FILENAME || SND_ASYNC);//phat am thanh
@@ -771,7 +771,7 @@ void playPingpong(Player you, Player computer)
 				ball.SetVX(ball.VX() * -1);
 				ball.SetX(WIDTH_BODER - 3);
 			}
-	
+
 		}
 		else
 		{
@@ -787,7 +787,7 @@ void playPingpong(Player you, Player computer)
 				{
 					gotoXY(1, HEIGHT_BODER / 3 - 1, h);
 					cout << "Type your name, the max size of name is 20 character";
-					
+
 					gotoXY(WIDTH_BODER / 2 - 12, HEIGHT_BODER / 3, h);
 					playerInfor temp;
 					char c = ' ';//nhan ki tu nguoi dung nhap vao
@@ -810,18 +810,18 @@ void playPingpong(Player you, Player computer)
 						{
 							c = _getch();//lay ki tu ra khoi bo dem
 							flag = _kbhit();//kiem tra bo dem co trong khong
-						} 
+						}
 
 						do
 						{
 							c = _getch();//lay ki tu tu ban phim
 
-							if ( c != 13 && c != 32)
+							if (c != 13 && c != 32)
 							{
-								cout <<c;//hien thi ra man hinh ki tu vua nhap
+								cout << c;//hien thi ra man hinh ki tu vua nhap
 								temp.name = temp.name + c;//them vao name
 							}
-							
+
 						} while ((temp.name.empty() || c != 13) && temp.name.size() <= MAX_LENGTH_NAME);//13 la ma ascii cua phim Enter
 					} while (temp.name.size() >= MAX_LENGTH_NAME + 1 || c != 13);
 
@@ -844,7 +844,7 @@ void playPingpong(Player you, Player computer)
 
 					showTopBestScore(listPlayerInfor, h);//Hien thi lai top
 				}
-				
+
 				ResetResult(you, computer, ball, yourScore, computerScore, h);
 
 				c.X = WIDTH_BODER / 2 - 12;
@@ -916,13 +916,13 @@ void playPingpong(Player you, Player computer)
 		}
 		//Ve va tao mau cho thanh choi cua minh
 		SetConsoleTextAttribute(h, 9);
-		you.Draw(h);
+		you.Draw(h, 9);
 
 		//Ve va tao mau cho thanh choi cua may
 		SetConsoleTextAttribute(h, 10);
-		computer.Draw(h);
-		
-		barrier.Draw(h);
+		computer.Draw(h, 9);
+
+		barrier.Draw(h, 12);
 
 		//Ve va tao mau cho qua bong
 		ball.Draw(h);
@@ -1506,7 +1506,7 @@ void showTopBestScore(vector<playerInfor> list, HANDLE &h)
 
 	cout << "NAME        SCORE";
 
-	for (int i = 5; i <5 + int(list.size()); i++)
+	for (int i = 5; i < 5 + int(list.size()); i++)
 	{
 		gotoXY(WIDTH_BODER + 1, HEIGHT_BODER / 4 + i, h);
 		cout << setw(17) << std::left << list[i - 5].name << "  " << list[i - 5].score;
