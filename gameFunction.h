@@ -16,7 +16,7 @@ void Nocursortype();
 // yourScore(diem cua ban), computerScore(diem cua may), h(con tro su dung voi man hinh console)
 // Output: Man hinh choi ban dau
 // Chuc nang: Reset lai san dau khi ban thang hoac may thang
-void ResetResult(Player& you, Player& com, Ball& b, bool& started, int& yourScore, int& computerScore, HANDLE& h);
+void ResetResult(Player& you, Player& com, Ball& b, int& yourScore, int& computerScore, HANDLE& h);
 
 //Reset toa do bong, thanh truot , diem
 //su dung trong man choi 2
@@ -31,14 +31,6 @@ void loadGame(char mode, int &level);
 //Man choi bong va hop
 void stagePingpongBox(Player you, Ball ball, HANDLE h);
 
-<<<<<<< Updated upstream
-	void playPingpong(Player you, Player computer);
-
-void menu(char& key, HANDLE h);
-
-void DrawMenu(char& key, HANDLE& h);
-=======
->>>>>>> Stashed changes
 
 //Man choi voi may
 void playPingpong(Player you, Player computer);
@@ -46,12 +38,10 @@ void playPingpong(Player you, Player computer);
 //Ve man hinh menu
 void DrawMenu(char& key, HANDLE& h);
 
+//Hien thi menu de lua chon chuc nang
 void showMenu(char& key, HANDLE h);
 
 //Hien thi chuc nang huong dan trong game
-<<<<<<< Updated upstream
-void ReadGuide(char& key, HANDLE& h);
-=======
 void ReadGuide(char& key, HANDLE& h);
 
 //Ve dong chu PingPong
@@ -59,4 +49,6 @@ void drawTextPingpong(HANDLE &h, int x, int y);
 
 //Hien thi top diem cao nhat va ten nguoi choi len man hinh
 void showTopBestScore(vector<playerInfor> list, HANDLE &h);
->>>>>>> Stashed changes
+
+//Xoa map sau khi choi xong
+void deleteMap(vector<Box>& list);
